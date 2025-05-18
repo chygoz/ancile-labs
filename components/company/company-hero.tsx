@@ -11,22 +11,22 @@ export default function CompanyHero() {
   return (
     <section className="relative min-h-screen w-full bg-[#330505] overflow-hidden pt-24">
       <div className="text-[#FDF5D9]">
-        <Container className="flex flex-col md:flex-row items-start justify-between gap-8 md:gap-40 py-16 md:py-24">
+        <Container className="flex flex-col lg:flex-row items-start justify-between gap-8 lg:gap-40 py-16 lg:py-24">
           {/* Left side - Heading */}
 
           <AnimatedHeading primaryText="WHO WE ARE" />
 
           {/* Right side - Text and Button */}
           <motion.div
-            className="w-full md:w-1/2"
+            className="w-full lg:w-1/2"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
             <p className="text-lg mb-8">
-              We're a team of problem-solvers helping businesses grow through
-              smart IT consulting, scalable talent, and modern web solutions —
-              all built on trust and real expertise.
+              We&apos;re a team of problem-solvers helping businesses grow
+              through smart IT consulting, scalable talent, and modern web
+              solutions — all built on trust and real expertise.
             </p>
             <Link
               href="/strategy"

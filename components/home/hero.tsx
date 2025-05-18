@@ -59,15 +59,15 @@ export default function Hero() {
               >
                 <motion.p className="text-base sm:text-lg mb-4 md:mb-6">
                   Ancile Inc. empowers your business with smart solutions, fast
-                  hires, and modern tools — whether you're scaling, streamlining
-                  tech, or building from scratch.
+                  hires, and modern tools — whether you&apos;re scaling,
+                  streamlining tech, or building from scratch.
                 </motion.p>
 
                 <Link
                   href="/strategy"
                   className="inline-block bg-[#EFD2DC] text-black px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-[#EFD2DC]/90 transition-colors font-semibold"
                 >
-                  Let's Talk Strategy
+                  Let&apos;s Talk Strategy
                 </Link>
               </motion.div>
             </div>

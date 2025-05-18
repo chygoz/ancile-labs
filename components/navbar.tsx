@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 import Container from "@/components/container";
+import MobileSidebar from "@/components/mobile-sidebar";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -25,7 +26,7 @@ export default function Navbar() {
     { name: "Company", href: "/company" },
     { name: "Services", href: "/services" },
     { name: "Clients", href: "/clients" },
-    { name: "Contact us", href: "/contact" },
+    { name: "Contact us", href: "#contact" },
   ];
 
   return (
@@ -35,30 +36,38 @@ export default function Navbar() {
       }`}
     >
       <Container className="py-5 flex items-center justify-between">
-        <Link href="/" className="flex items-center">
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-          >
-            <Image
-              src="/logo.svg"
-              alt="Ancile Logo"
-              width={50}
-              height={50}
-              className="mr-2"
-            />
-          </motion.div>
+        <div className="flex items-center">
+          {/* Mobile Sidebar */}
+          <div className="md:hidden mr-4">
+            <MobileSidebar navItems={navItems} />
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="text-white font-bold flex flex-col"
-          >
-            <span className="text-2xl">Ancile</span>
-            <span className="text-sm -mt-1 self-end">Canada</span>
-          </motion.div>
-        </Link>
+          {/* Logo */}
+          <Link href="/" className="flex items-center">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            >
+              <Image
+                src="/logo.svg"
+                alt="Ancile Logo"
+                width={50}
+                height={50}
+                className="mr-2"
+              />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="text-white font-bold flex flex-col"
+            >
+              <span className="text-2xl">Ancile</span>
+              <span className="text-sm -mt-1 self-end">Canada</span>
+            </motion.div>
+          </Link>
+        </div>
 
         <nav className="hidden md:flex items-center space-x-8">
           {navItems.map((item, index) => (
@@ -86,6 +95,7 @@ export default function Navbar() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
+          className="hidden md:block"
         >
           <Link
             href="/get-started"
