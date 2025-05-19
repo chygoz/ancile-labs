@@ -6,6 +6,8 @@ import { motion } from "framer-motion";
 
 import { AnimatedHeading } from "@/components/common/animated-heading";
 import Container from "@/components/container";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "../ui/button";
 
 export default function Hero() {
   return (
@@ -65,7 +67,10 @@ export default function Hero() {
 
                 <Link
                   href="/strategy"
-                  className="inline-block bg-[#EFD2DC] text-black px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-[#EFD2DC]/90 transition-colors font-semibold"
+                  className={cn(
+                    "inline-block lg:h-12 rounded-full transition-colors font-semibold",
+                    buttonVariants({ variant: "pink" })
+                  )}
                 >
                   Let&apos;s Talk Strategy
                 </Link>
