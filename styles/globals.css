@@ -120,3 +120,19 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Marquee Animation - Right to Left */
+@keyframes marquee-rtl {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-rtl {
+  animation: marquee-rtl 30s linear infinite;
+  min-width: 200%;
+  display: inline-flex;
+}

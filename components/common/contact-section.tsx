@@ -77,12 +77,8 @@ export default function ContactSection() {
   }
 
   return (
-    <section
-      className="w-full border-t border-black bg-[#FDF5D9]"
-      ref={sectionRef}
-      id="contact"
-    >
-      <Container className="py-16 md:py-24">
+    <section className="w-full bg-[#FDF5D9]" ref={sectionRef} id="contact">
+      <Container className="pb-16 md:pb-24">
         <div className="grid gap-8 md:grid-cols-2 md:gap-12 lg:gap-16">
           <div>
             <AnimatedHeading
