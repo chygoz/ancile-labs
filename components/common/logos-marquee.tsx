@@ -52,25 +52,27 @@ const LogosMarquee = () => {
   };
 
   return (
-    <section className="bg-[#FDF5D9] overflow-hidden relative py-20 space-y-7">
-      {/* Left blur gradient */}
-      <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-[#FDF5D9] to-transparent z-10"></div>
-
-      {/* Right blur gradient */}
-      <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-[#FDF5D9] to-transparent z-10"></div>
-
+    <section className="bg-[#FDF5D9] overflow-hidden relative py-10 lg:py-20 space-y-7">
       <div className="relative overflow-hidden mb-8">
-        <div className="flex whitespace-nowrap animate-marquee-rtl">
-          {/* First set of logos */}
-          {[...companyLogos, ...companyLogos].map((logo, index) => (
-            <div key={index} className="mx-4 md:mx-8 flex items-center">
-              <Image
-                src={logo.src || "/placeholder.svg"}
-                alt={logo.name}
-                className="object-contain w-full shrink not-sm:min-w-12"
-              />
-            </div>
-          ))}
+        <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-[#FDF5D9] to-transparent z-10"></div>
+
+        <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-[#FDF5D9] to-transparent z-10"></div>
+        <div className="relative overflow-hidden mb-4">
+          <div className="flex whitespace-nowrap animate-marquee-rtl">
+            {/* First set of logos */}
+            {[...companyLogos, ...companyLogos].map((logo, index) => (
+              <div
+                key={index}
+                className="mx-4 md:mx-8 flex items-center w-[122px] h-[42px]"
+              >
+                <Image
+                  src={logo.src || "/placeholder.svg"}
+                  alt={logo.name}
+                  className="object-contain w-[122px] h-[42px]"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 

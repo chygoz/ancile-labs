@@ -21,7 +21,7 @@ export default function ServicesSection() {
 
   return (
     <section className="bg-[#330505] overflow-hidden">
-      <Container className="flex flex-col md:flex-row relative py-20">
+      <Container className="flex flex-col md:flex-row relative lg:py-20">
         {/* Left side - Services list */}
         <div className="w-full md:w-1/2 py-16">
           <div className="h-full flex items-center">
@@ -52,7 +52,7 @@ export default function ServicesSection() {
         </div>
 
         {/* Right side - Shield with maple leaf mask */}
-        <div className="w-full md:w-1/2 md:absolute md:right-0 md:top-0 md:bottom-0 md:h-full">
+        <div className="w-full md:w-1/2 md:absolute md:right-0 md:top-0 md:bottom-0 md:h-full not-sm:-ml-4 md:-ml-8 lg:ml-0">
           <div className="h-full w-[100vw] bg-[#A20F0F] py-16 flex items-center">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}

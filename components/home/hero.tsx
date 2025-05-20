@@ -1,14 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-import { cn } from "@/lib/utils";
 import Container from "@/components/container";
-import { buttonVariants } from "@/components/ui/button";
-import { AnimatedHeading } from "@/components/common/animated-heading";
-import { AnimatedSplitContent } from "../common/animated-split-content";
+import { AnimatedSplitContent } from "@/components/common/animated-split-content";
 
 export default function Hero() {
   return (

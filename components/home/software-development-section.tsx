@@ -6,14 +6,14 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 
 import Container from "@/components/container";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 
 export default function SoftwareDevelopmentSection() {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
   return (
-    <section className="bg-[#FDF5D9]">
+    <section className="bg-[#FDF5D9] overflow-hidden">
       <Container className="py-16" as="div">
         <motion.div
           ref={sectionRef}
@@ -55,7 +55,7 @@ export default function SoftwareDevelopmentSection() {
                 initial={{ y: 20, opacity: 0 }}
                 animate={isInView ? { y: 0, opacity: 1 } : {}}
                 transition={{ delay: 0.7, duration: 0.5 }}
-                className="absolute bottom-6 left-1/2 transform -translate-x-1/2"
+                className="absolute bottom-1/2 left-1/2 transform -translate-x-1/2"
               >
                 <Button variant={"pink"}>Start Your Project</Button>
               </motion.div>
@@ -73,7 +73,7 @@ export default function SoftwareDevelopmentSection() {
               Software
             </h2>
             <p className="text-[#8A846F]">
-              Web apps that aren't just Pretty — they <br /> perform.
+              Web apps that aren`&apos;t just Pretty — they <br /> perform.
             </p>
           </motion.div>
         </motion.div>

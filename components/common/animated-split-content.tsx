@@ -11,8 +11,8 @@ interface AnimatedSplitContentProps {
   primaryHeading: string;
   secondaryHeading?: string;
   description: string;
-  linkText: string;
-  linkHref: string;
+  linkText?: string;
+  linkHref?: string;
   linkVariant?:
     | "default"
     | "destructive"
@@ -30,8 +30,8 @@ export function AnimatedSplitContent({
   primaryHeading = "TECHNOLOGY",
   secondaryHeading = "CONSULTING",
   description = "Ancile Inc. empowers your business with smart solutions, fast hires, and modern tools — whether you're scaling, streamlining tech, or building from scratch.",
-  linkText = "Let's Talk Strategy",
-  linkHref = "/strategy",
+  linkText,
+  linkHref,
   linkVariant = "pink",
   className = "",
   headingClassName = "",
@@ -47,7 +47,7 @@ export function AnimatedSplitContent({
     <div
       ref={ref}
       className={cn(
-        "flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-8 text-[#FDF5D9]",
+        "flex flex-col md:flex-row items-start justify-between gap-4 md:gap-8 text-[#FDF5D9]",
         className
       )}
     >
@@ -73,15 +73,17 @@ export function AnimatedSplitContent({
           {description}
         </motion.p>
 
-        <Link
-          href={linkHref}
-          className={cn(
-            "inline-block lg:h-12 rounded-full transition-colors font-semibold",
-            buttonVariants({ variant: linkVariant as any })
-          )}
-        >
-          {linkText}
-        </Link>
+        {linkText && linkHref && (
+          <Link
+            href={linkHref}
+            className={cn(
+              "inline-block lg:h-12 rounded-full transition-colors font-semibold",
+              buttonVariants({ variant: linkVariant as any })
+            )}
+          >
+            {linkText}
+          </Link>
+        )}
       </motion.div>
     </div>
   );

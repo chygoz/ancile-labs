@@ -4,10 +4,10 @@ import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import Image, { type StaticImageData } from "next/image";
 
 import Barter from "@/public/barter-logo.svg";
 import Container from "@/components/container";
-import Image, { StaticImageData } from "next/image";
 
 interface Testimonial {
   quote: string;
@@ -62,7 +62,7 @@ export default function TestimonialCarousel() {
   const currentTestimonial = testimonials[currentIndex];
 
   return (
-    <section className="bg-[#F7ECC7]">
+    <section className="bg-[#F7ECC7] overflow-hidden">
       <Container className="py-16" as="div">
         <motion.div
           ref={containerRef}
@@ -71,12 +71,14 @@ export default function TestimonialCarousel() {
           transition={{ duration: 0.6 }}
           className="relative not-sm:px-12"
         >
-          <div className="flex flex-col items-center text-center">
+          {/* Fixed height wrapper for the entire testimonial content */}
+          <div className="flex flex-col items-center text-center h-full lg:h-[350px] justify-between">
+            {/* Logo section with fixed height */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="mb-8"
+              className="h-16 flex items-center"
             >
               <Image
                 src={currentTestimonial.logo || "/placeholder.svg"}
@@ -91,7 +93,7 @@ export default function TestimonialCarousel() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
-              className="mb-8"
+              className="flex items-center py-10 justify-center lg:max-h-[180px]"
             >
               <p className="text-[#8A846F] text-lg lg:text-2xl leading-relaxed max-w-3xl">
                 {currentTestimonial.quote}
@@ -103,7 +105,7 @@ export default function TestimonialCarousel() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="mt-4"
+              className="h-24 flex flex-col justify-center"
             >
               <p className="font-bold text-lg xl:text-xl text-[#330505]">
                 {currentTestimonial.author}

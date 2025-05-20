@@ -7,7 +7,7 @@ import { useInView } from "framer-motion";
 
 import Container from "@/components/container";
 import { Button } from "@/components/ui/button";
-import { AnimatedSplitContent } from "../common/animated-split-content";
+import { AnimatedSplitContent } from "@/components/common/animated-split-content";
 
 export default function TalentSection() {
   const headingRef = useRef(null);
@@ -20,7 +20,7 @@ export default function TalentSection() {
 
   return (
     <section className="w-full bg-[#FDF5D9] overflow-x-hidden">
-      <Container className="py-24">
+      <Container className="py-12 lg:py-24">
         <div className="flex flex-col items-center">
           <motion.div
             ref={headingRef}
@@ -94,11 +94,11 @@ export default function TalentSection() {
             />
           </motion.div>
 
-          <div className="pt-24">
+          <div className="pt-12 lg:pt-24">
             <AnimatedSplitContent
               primaryHeading="Let us help with"
               secondaryHeading="what we do best"
-              description="At Ancile Inc., we offer a powerful mix of IT consulting, talent solutions, and web application development — designed to help you scale smarter, build faster, and operate with confidence. Whether you're launching a product, expanding your team, or rethinking your tech strategy, we’ve got you covered."
+              description="At Ancile Inc., we offer a powerful mix of IT consulting, talent solutions, and web application development — designed to help you scale smarter, build faster, and operate with confidence. Whether you're launching a product, expanding your team, or rethinking your tech strategy, we've got you covered."
               linkHref="/strategy"
               linkText="Let's Talk Strategy"
               className="text-[#330505]"
@@ -128,7 +128,12 @@ function ServiceButton({
 }: ServiceButtonProps) {
   return (
     <motion.button
-      className={`${color} lg:text-7xl text-4xl font-bold py-16 px-10 rounded-full flex-1 text-center ${textColor}`}
+      className={`${color} font-bold flex-1 text-center ${textColor} 
+        rounded-3xl sm:rounded-full
+        text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl
+        py-6 sm:py-8 md:py-10 lg:py-12 xl:py-16
+        px-4 sm:px-6 md:px-8 lg:px-10
+        min-h-[100px] sm:min-h-[120px] md:min-h-[150px] lg:min-h-[180px] xl:min-h-[200px]`}
       initial={{ opacity: 0, scale: 0.9 }}
       animate={isInView ? { opacity: 1, scale: 1 } : {}}
       transition={{
