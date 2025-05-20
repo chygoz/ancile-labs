@@ -4,10 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-import { AnimatedHeading } from "@/components/common/animated-heading";
-import Container from "@/components/container";
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "../ui/button";
+import Container from "@/components/container";
+import { buttonVariants } from "@/components/ui/button";
+import { AnimatedHeading } from "@/components/common/animated-heading";
+import { AnimatedSplitContent } from "../common/animated-split-content";
 
 export default function Hero() {
   return (
@@ -23,10 +24,11 @@ export default function Hero() {
         />
       </div>
 
-      {/* Content Container */}
-      <div className="relative z-10 h-full flex items-end justify-center">
+      <Container className="relative z-10 h-full flex items-end justify-center">
+        {/* Content Container */}
+
         <motion.div
-          className="lg:w-[90%] max-w-7xl bg-[#B30000] text-white p-6 md:p-12 rounded-t-3xl shadow-xl"
+          className="bg-[#B30000] text-white p-6 md:p-12 rounded-t-3xl shadow-xl"
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
@@ -39,46 +41,15 @@ export default function Hero() {
             maxHeight: "min(70vh, 500px)",
           }}
         >
-          <Container>
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-8 text-[#FDF5D9]">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.7 }}
-                className="md:w-1/2"
-              >
-                <AnimatedHeading
-                  primaryText="TECHNOLOGY"
-                  secondaryText="CONSULTING"
-                />
-              </motion.div>
-
-              <motion.div
-                className="md:w-1/2"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.1, duration: 0.5 }}
-              >
-                <motion.p className="text-base sm:text-lg mb-4 md:mb-6">
-                  Ancile Inc. empowers your business with smart solutions, fast
-                  hires, and modern tools — whether you&apos;re scaling,
-                  streamlining tech, or building from scratch.
-                </motion.p>
-
-                <Link
-                  href="/strategy"
-                  className={cn(
-                    "inline-block lg:h-12 rounded-full transition-colors font-semibold",
-                    buttonVariants({ variant: "pink" })
-                  )}
-                >
-                  Let&apos;s Talk Strategy
-                </Link>
-              </motion.div>
-            </div>
-          </Container>
+          <AnimatedSplitContent
+            primaryHeading="TECHNOLOGY"
+            secondaryHeading="CONSULTING"
+            description="Ancile Inc. empowers your business with smart solutions, fast hires, and modern tools — whether you're scaling, streamlining tech, or building from scratch."
+            linkHref="/strategy"
+            linkText="Let's Talk Strategy"
+          />
         </motion.div>
-      </div>
+      </Container>
     </section>
   );
 }

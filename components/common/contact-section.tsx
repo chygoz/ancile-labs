@@ -17,8 +17,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import Container from "../container";
-import { AnimatedHeading } from "./animated-heading";
+import Container from "@/components/container";
+import { AnimatedHeading } from "@/components/common/animated-heading";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -78,7 +78,7 @@ export default function ContactSection() {
 
   return (
     <section className="w-full bg-[#FDF5D9]" ref={sectionRef} id="contact">
-      <Container className="pb-16 md:pb-24">
+      <Container className="py-16 md:py-24">
         <div className="grid gap-8 md:grid-cols-2 md:gap-12 lg:gap-16">
           <div>
             <AnimatedHeading
