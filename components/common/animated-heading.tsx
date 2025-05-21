@@ -18,7 +18,6 @@ export function AnimatedHeading({
   primaryText,
   secondaryText,
   className,
-  textColor = "#FDF5D9",
   primaryDelay = 0.7,
   secondaryDelay = 0.9,
   animationDuration = 0.5,
@@ -29,7 +28,6 @@ export function AnimatedHeading({
         "text-3xl sm:text-4xl md:text-6xl font-bold mb-0 md:mb-4 tracking-tight",
         className
       )}
-      style={{ color: textColor }}
     >
       <motion.span
         className="inline-block"
