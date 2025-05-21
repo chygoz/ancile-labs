@@ -12,7 +12,9 @@ export default function Home() {
     <div>
       <Hero />
       <TalentSection />
-      <LogosMarquee />
+      <div className="py-10 lg:py-20 bg-[#FDF5D9]">
+        <LogosMarquee />
+      </div>
       <SoftwareDevelopmentSection />
       <TestimonialCarousel />
       <TeamShowcase />

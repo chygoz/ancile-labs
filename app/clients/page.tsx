@@ -9,7 +9,9 @@ const ClientsPage = () => {
   return (
     <div>
       <ClientsHero />
-      <LogosMarquee />
+      <div className="py-10 lg:py-20 bg-[#FDF5D9]">
+        <LogosMarquee />
+      </div>
       <div className="pb-10 lg:pb-20 bg-[#FDF5D9]">
         <Container>
           <AnimatedSplitContent
