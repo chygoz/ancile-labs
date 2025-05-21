@@ -10,7 +10,7 @@ import { AnimatedHeading } from "./animated-heading";
 interface AnimatedSplitContentProps {
   primaryHeading: string;
   secondaryHeading?: string;
-  description: string;
+  description?: string;
   linkText?: string;
   linkHref?: string;
   linkVariant?:
@@ -28,8 +28,8 @@ interface AnimatedSplitContentProps {
 
 export function AnimatedSplitContent({
   primaryHeading = "TECHNOLOGY",
-  secondaryHeading = "CONSULTING",
-  description = "Ancile Inc. empowers your business with smart solutions, fast hires, and modern tools — whether you're scaling, streamlining tech, or building from scratch.",
+  secondaryHeading,
+  description,
   linkText,
   linkHref,
   linkVariant = "pink",
@@ -69,9 +69,11 @@ export function AnimatedSplitContent({
         animate={inView ? { opacity: 1 } : { opacity: 0 }}
         transition={{ delay: 1.1, duration: 0.5 }}
       >
-        <motion.p className="text-base sm:text-lg mb-4 md:mb-6 font-medium">
-          {description}
-        </motion.p>
+        {description && (
+          <motion.p className="text-base sm:text-lg mb-4 md:mb-6 font-medium">
+            {description}
+          </motion.p>
+        )}
 
         {linkText && linkHref && (
           <Link

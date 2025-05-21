@@ -8,6 +8,8 @@ import { usePathname } from "next/navigation";
 
 import Container from "@/components/container";
 import MobileSidebar from "@/components/mobile-sidebar";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "./ui/button";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -99,7 +101,10 @@ export default function Navbar() {
         >
           <Link
             href="/get-started"
-            className="bg-white text-[#6B0000] px-4 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors"
+            className={cn(
+              "font-medium transition-colors",
+              buttonVariants({ variant: "pink" })
+            )}
           >
             Get Started
           </Link>

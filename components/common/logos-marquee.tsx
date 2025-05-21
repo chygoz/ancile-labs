@@ -52,7 +52,7 @@ const LogosMarquee = () => {
   };
 
   return (
-    <section className="bg-[#FDF5D9] overflow-hidden relative py-10 lg:py-20 space-y-7">
+    <section className="bg-[#FDF5D9] overflow-hidden relative space-y-7">
       <div className="relative overflow-hidden mb-8">
         <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-[#FDF5D9] to-transparent z-10"></div>
 
