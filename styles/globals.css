@@ -3,6 +3,12 @@
 
 @custom-variant dark (&:is(.dark *));
 
+body {
+  @apply !min-w-full;
+  margin: 0;
+  padding: 0;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

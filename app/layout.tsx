@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 
 import "@/styles/globals.css";
+import { Toaster } from "sonner";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 
@@ -25,6 +26,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} flex flex-col antialiased scroll-smooth overflow-x-hidden`}
       >
+        <Toaster position="top-right" richColors />
         <Navbar />
         <main className="grow mt-[100px]">{children}</main>
         <Footer />

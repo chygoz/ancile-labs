@@ -21,7 +21,7 @@ export default function ServicesSection() {
 
   return (
     <section className="bg-[#330505] overflow-hidden">
-      <Container className="flex flex-col md:flex-row relative lg:py-20">
+      <Container className="flex flex-col md:flex-row relative md:py-20">
         {/* Left side - Services list */}
         <div className="w-full md:w-1/2 py-16">
           <div className="h-full flex items-center">
@@ -58,7 +58,7 @@ export default function ServicesSection() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={isInView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.7, delay: 0.5 }}
-              className="relative w-full max-w-md aspect-[4/5] sm:ml-8 lg:ml-40"
+              className="relative w-full max-w-md aspect-[4/5] sm:ml-8 md:ml-20 lg:ml-28 2xl:ml-40"
             >
               {/* Shield outline */}
               <div className="absolute inset-0 z-10">

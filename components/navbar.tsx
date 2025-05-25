@@ -5,11 +5,9 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-
 import Container from "@/components/container";
 import MobileSidebar from "@/components/mobile-sidebar";
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "./ui/button";
+import GetStartedModal from "@/components/get-started-modal";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -33,7 +31,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`h-[106px] fixed top-0 w-full z-[999] transition-colors duration-300 ${
+      className={`h-[106px] fixed top-0 w-full z-50 transition-colors duration-300 ${
         scrolled ? "bg-[#330505]/95 shadow-md" : "bg-[#330505]"
       }`}
     >
@@ -99,15 +97,7 @@ export default function Navbar() {
           transition={{ delay: 0.5, duration: 0.5 }}
           className="hidden md:block"
         >
-          <Link
-            href="/get-started"
-            className={cn(
-              "font-medium transition-colors",
-              buttonVariants({ variant: "pink" })
-            )}
-          >
-            Get Started
-          </Link>
+          <GetStartedModal />
         </motion.div>
       </Container>
     </header>

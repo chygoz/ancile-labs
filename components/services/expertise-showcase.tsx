@@ -47,7 +47,7 @@ const ExpertiseShowcase = () => {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.8 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 rounded-3xl lg:rounded-[70px] overflow-hidden"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 rounded-3xl lg:rounded-[70px] overflow-hidden"
           style={{ backgroundColor: "#FDF5D9" }}
         >
           {expertiseAreas.map((expertise, index) => (

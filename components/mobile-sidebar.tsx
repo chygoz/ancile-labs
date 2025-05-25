@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
+import GetStartedModal from "./get-started-modal";
 
 interface NavItem {
   name: string;
@@ -118,13 +119,7 @@ export default function MobileSidebar({ navItems }: { navItems: NavItem[] }) {
 
             {/* Sidebar footer */}
             <div className="p-5 border-t border-[#4a0a0a]">
-              <Link
-                href="/get-started"
-                className="bg-[#EFD2DC] text-[#6B0000] px-4 py-2 rounded-full font-medium hover:bg-[#EFD2DC]/90 transition-colors w-full block text-center"
-                onClick={() => setIsOpen(false)}
-              >
-                Get Started
-              </Link>
+              <GetStartedModal />
             </div>
           </motion.div>
         )}

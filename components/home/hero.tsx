@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 
 import Container from "@/components/container";
 import { AnimatedSplitContent } from "@/components/common/animated-split-content";
+import { AnimatedSplit } from "../common/animated-split";
 
 export default function Hero() {
   return (
@@ -37,13 +38,14 @@ export default function Hero() {
             maxHeight: "min(70vh, 500px)",
           }}
         >
-          <AnimatedSplitContent
+          <AnimatedSplit />
+          {/* <AnimatedSplitContent
             primaryHeading="TECHNOLOGY"
             secondaryHeading="CONSULTING"
             description="Ancile Inc. empowers your business with smart solutions, fast hires, and modern tools — whether you're scaling, streamlining tech, or building from scratch."
             linkHref="/strategy"
             linkText="Let's Talk Strategy"
-          />
+          /> */}
         </motion.div>
       </Container>
     </section>
