@@ -24,11 +24,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} flex flex-col antialiased scroll-smooth overflow-x-hidden`}
+        className={`${geistSans.variable} flex flex-col antialiased scroll-smooth overflow-x-hidden min-h-screen font-sans`}
       >
         <Toaster position="top-right" richColors />
         <Navbar />
-        <main className="grow mt-[100px]">{children}</main>
+        <main className="flex-grow mt-[100px]">{children}</main>
         <Footer />
       </body>
     </html>

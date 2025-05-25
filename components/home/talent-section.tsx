@@ -53,7 +53,7 @@ export default function TalentSection() {
               />
             </motion.div>
 
-            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 z-50">
+            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 z-20">
               <motion.div
                 initial={{ y: 20, opacity: 0 }}
                 animate={isImageInView ? { y: 25, opacity: 1 } : {}}

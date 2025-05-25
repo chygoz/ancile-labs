@@ -1,5 +1,6 @@
 "use client";
 
+import Script from "next/script";
 import { Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
@@ -7,8 +8,9 @@ import { useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { toast } from "sonner";
 import { submitContactForm } from "@/actions/contact";
-import { contactFormSchema, ContactFormValues } from "@/lib/schamas";
+import { contactFormSchema, type ContactFormValues } from "@/lib/schamas";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -21,8 +23,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Container from "@/components/container";
 import { AnimatedHeading } from "@/components/common/animated-heading";
-import { toast } from "sonner";
-import Script from "next/script";
 
 declare global {
   interface Window {
@@ -48,6 +48,7 @@ export default function ContactSection() {
   const [turnstileToken, setTurnstileToken] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [turnstileLoaded, setTurnstileLoaded] = useState(false);
+  const [turnstileRendered, setTurnstileRendered] = useState(false);
   const turnstileRef = useRef<HTMLDivElement>(null);
   const widgetId = useRef<string>("");
 
@@ -85,7 +86,12 @@ export default function ContactSection() {
   };
 
   const renderTurnstile = () => {
-    if (window.turnstile && turnstileRef.current && !widgetId.current) {
+    if (
+      window.turnstile &&
+      turnstileRef.current &&
+      !widgetId.current &&
+      !turnstileRendered
+    ) {
       try {
         widgetId.current = window.turnstile.render(turnstileRef.current, {
           sitekey:
@@ -105,6 +111,7 @@ export default function ContactSection() {
           theme: "dark",
           size: "normal",
         });
+        setTurnstileRendered(true);
       } catch (error) {
         console.error("Error rendering Turnstile:", error);
       }
@@ -112,18 +119,36 @@ export default function ContactSection() {
   };
 
   useEffect(() => {
-    if (turnstileLoaded) {
-      // Small delay to ensure the DOM is ready
-      setTimeout(renderTurnstile, 100);
+    if (turnstileLoaded && !turnstileRendered) {
+      const timer = setTimeout(renderTurnstile, 100);
+      return () => clearTimeout(timer);
     }
-  }, [turnstileLoaded]);
+  }, [turnstileLoaded, turnstileRendered]);
+
+  // Cleanup effect
+  useEffect(() => {
+    return () => {
+      if (window.turnstile && widgetId.current) {
+        try {
+          window.turnstile.remove(widgetId.current);
+        } catch (error) {
+          console.error("Error removing Turnstile:", error);
+        }
+      }
+    };
+  }, []);
 
   const resetTurnstile = () => {
-    if (window.turnstile && widgetId.current) {
+    if (window.turnstile && widgetId.current && turnstileRendered) {
       try {
         window.turnstile.reset(widgetId.current);
+        setTurnstileToken("");
       } catch (error) {
         console.error("Error resetting Turnstile:", error);
+        // If reset fails, try to re-render
+        setTurnstileRendered(false);
+        widgetId.current = "";
+        setTimeout(renderTurnstile, 100);
       }
     }
   };
@@ -145,18 +170,15 @@ export default function ContactSection() {
       if (result.success) {
         toast.success(result.message);
         form.reset();
-        setTurnstileToken("");
         resetTurnstile();
       } else {
         toast.error(result.message);
         resetTurnstile();
-        setTurnstileToken("");
       }
     } catch (error) {
       console.error("Submission error:", error);
       toast.error("An unexpected error occurred. Please try again.");
       resetTurnstile();
-      setTurnstileToken("");
     } finally {
       setIsSubmitting(false);
     }

@@ -65,6 +65,7 @@ export default function GetStartedModal() {
   const [turnstileLoaded, setTurnstileLoaded] = useState(false);
   const turnstileRef = useRef<HTMLDivElement>(null);
   const widgetId = useRef<string>("");
+  const [turnstileRendered, setTurnstileRendered] = useState(false);
 
   const form = useForm<GetStartedFormValues>({
     resolver: zodResolver(getStartedFormSchema),
@@ -98,7 +99,12 @@ export default function GetStartedModal() {
   };
 
   const renderTurnstile = () => {
-    if (window.turnstile && turnstileRef.current && !widgetId.current) {
+    if (
+      window.turnstile &&
+      turnstileRef.current &&
+      !widgetId.current &&
+      !turnstileRendered
+    ) {
       try {
         widgetId.current = window.turnstile.render(turnstileRef.current, {
           sitekey:
@@ -118,6 +124,7 @@ export default function GetStartedModal() {
           theme: "dark",
           size: "normal",
         });
+        setTurnstileRendered(true);
       } catch (error) {
         console.error("Error rendering Turnstile:", error);
       }
@@ -125,11 +132,24 @@ export default function GetStartedModal() {
   };
 
   useEffect(() => {
-    if (turnstileLoaded && isOpen) {
-      // Small delay to ensure the DOM is ready
-      setTimeout(renderTurnstile, 100);
+    if (turnstileLoaded && isOpen && !turnstileRendered) {
+      const timer = setTimeout(renderTurnstile, 100);
+      return () => clearTimeout(timer);
     }
-  }, [turnstileLoaded, isOpen]);
+  }, [turnstileLoaded, isOpen, turnstileRendered]);
+
+  // Cleanup effect
+  useEffect(() => {
+    return () => {
+      if (window.turnstile && widgetId.current) {
+        try {
+          window.turnstile.remove(widgetId.current);
+        } catch (error) {
+          console.error("Error removing Turnstile:", error);
+        }
+      }
+    };
+  }, []);
 
   async function onSubmit(values: GetStartedFormValues) {
     if (!turnstileToken) {
@@ -148,30 +168,32 @@ export default function GetStartedModal() {
       if (result.success) {
         toast.success(result.message);
         form.reset();
-        setTurnstileToken("");
         resetTurnstile();
         setTimeout(() => setIsOpen(false), 1500);
       } else {
         toast.error(result.message);
         resetTurnstile();
-        setTurnstileToken("");
       }
     } catch (error) {
       console.error("Submission error:", error);
       toast.error("An unexpected error occurred. Please try again.");
       resetTurnstile();
-      setTurnstileToken("");
     } finally {
       setIsSubmitting(false);
     }
   }
 
   const resetTurnstile = () => {
-    if (window.turnstile && widgetId.current) {
+    if (window.turnstile && widgetId.current && turnstileRendered) {
       try {
         window.turnstile.reset(widgetId.current);
+        setTurnstileToken("");
       } catch (error) {
         console.error("Error resetting Turnstile:", error);
+        // If reset fails, try to re-render
+        setTurnstileRendered(false);
+        widgetId.current = "";
+        setTimeout(renderTurnstile, 100);
       }
     }
   };
@@ -181,8 +203,14 @@ export default function GetStartedModal() {
     if (!open) {
       form.reset();
       setTurnstileToken("");
+      setTurnstileRendered(false);
       if (widgetId.current) {
-        resetTurnstile();
+        try {
+          window.turnstile.remove(widgetId.current);
+        } catch (error) {
+          console.error("Error removing Turnstile:", error);
+        }
+        widgetId.current = "";
       }
     }
   };
@@ -201,12 +229,14 @@ export default function GetStartedModal() {
             Get Started
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[900px] p-6 bg-[#FDF5D9] border-[#330505] h-[95vh] max-h-[95vh] w-[95vw] sm:w-full flex flex-col overflow-hidden">
+        <DialogContent className="sm:max-w-[900px] p-4 lg:p-6 bg-[#FDF5D9] border-[#330505] h-[95vh] max-h-[95vh] w-[95vw] sm:w-full flex flex-col overflow-hidden">
           <div className="flex flex-col h-full">
             <DialogHeader className="text-center p-4 pb-6 flex-shrink-0">
-              <DialogTitle className="text-2xl sm:text-3xl font-bold text-[#330505] tracking-wide text-center">
-                <AnimatedHeading primaryText="GET STARTED" />
-              </DialogTitle>
+              <AnimatedHeading
+                primaryText="GET STARTED"
+                className="text-[#330505] text-center"
+              />
+
               <DialogDescription className="text-center mt-2 text-[#8A846F] text-xs max-w-[500px] mx-auto leading-relaxed">
                 Ready to transform your business with smart solutions? Share
                 your project details below and let&apos;s start the
