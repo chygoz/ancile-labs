@@ -100,8 +100,8 @@ export const GetStartedEmail = ({
         {/* Footer */}
         <Section style={footer}>
           <Text style={footerText}>
-            This request was submitted through your website's "Get Started"
-            form.
+            This request was submitted through your website&apos;s &apos;Get
+            Started&apos; form.
           </Text>
           <Text style={footerText}>
             © {new Date().getFullYear()} Ancile Inc. All rights reserved.
