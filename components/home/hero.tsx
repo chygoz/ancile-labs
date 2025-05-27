@@ -4,8 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 import Container from "@/components/container";
-import { AnimatedSplitContent } from "@/components/common/animated-split-content";
-import { AnimatedSplit } from "../common/animated-split";
+import { AnimatedSplit } from "@/components/common/animated-split";
 
 export default function Hero() {
   return (
@@ -23,7 +22,6 @@ export default function Hero() {
 
       <Container className="relative z-10 h-full flex items-end justify-center">
         {/* Content Container */}
-
         <motion.div
           className="bg-[#B30000] text-white p-6 md:p-12 rounded-t-3xl shadow-xl"
           initial={{ opacity: 0, y: 100 }}
@@ -39,13 +37,6 @@ export default function Hero() {
           }}
         >
           <AnimatedSplit />
-          {/* <AnimatedSplitContent
-            primaryHeading="TECHNOLOGY"
-            secondaryHeading="CONSULTING"
-            description="Ancile Inc. empowers your business with smart solutions, fast hires, and modern tools — whether you're scaling, streamlining tech, or building from scratch."
-            linkHref="/strategy"
-            linkText="Let's Talk Strategy"
-          /> */}
         </motion.div>
       </Container>
     </section>

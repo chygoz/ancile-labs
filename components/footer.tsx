@@ -19,7 +19,7 @@ export default function Footer() {
     { name: "Services", href: "/services" },
     { name: "Clients", href: "/clients" },
     { name: "Contact us", href: "#contact" },
-    { name: "Privacy policy", href: "/privacy" },
+    { name: "Privacy policy", href: "/privacy-policy" },
   ];
 
   // Show scroll button when page is scrolled down
