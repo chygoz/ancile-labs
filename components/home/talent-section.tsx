@@ -49,11 +49,11 @@ export default function TalentSection() {
                 src="/tech-professionals.webp"
                 alt="Tech professionals in conversation"
                 fill
-                className="object-cover"
+                className="not-sm:object-left object-cover"
               />
             </motion.div>
 
-            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 z-50">
+            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 z-20">
               <motion.div
                 initial={{ y: 20, opacity: 0 }}
                 animate={isImageInView ? { y: 25, opacity: 1 } : {}}
@@ -131,9 +131,7 @@ function ServiceButton({
       className={`${color} font-bold flex-1 text-center ${textColor} 
         rounded-3xl sm:rounded-full
         text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl
-        py-6 sm:py-8 md:py-10 lg:py-12 xl:py-16
-        px-4 sm:px-6 md:px-8 lg:px-10
-        min-h-[100px] sm:min-h-[120px] md:min-h-[150px] lg:min-h-[180px] xl:min-h-[200px]`}
+        py-6 px-4 sm:px-6 lg:aspect-[358/179] h-full w-full lg:h-[179px] lg:w-[358px]`}
       initial={{ opacity: 0, scale: 0.9 }}
       animate={isInView ? { opacity: 1, scale: 1 } : {}}
       transition={{

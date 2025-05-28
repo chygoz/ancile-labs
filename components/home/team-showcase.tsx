@@ -1,15 +1,16 @@
 "use client";
 
 import { useRef } from "react";
-import Image, { type StaticImageData } from "next/image";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
+import Image, { type StaticImageData } from "next/image";
 
-import SirBlack from "@/public/sir-black.webp";
-import WhiteWoman from "@/public/white-woman.webp";
 import Moustach from "@/public/moustach.webp";
 import Slash from "@/public/slash-vector.svg";
 import Container from "@/components/container";
+import SirBlack from "@/public/sir-black.webp";
+import WhiteWoman from "@/public/white-woman.webp";
+import { AnimatedSplitContent } from "@/components/common/animated-split-content";
 
 interface TeamMember {
   image: string | StaticImageData;
@@ -90,6 +91,18 @@ export default function TeamShowcase() {
             ))}
           </div>
         </motion.div>
+
+        <div className="pt-12 lg:pt-24">
+          <AnimatedSplitContent
+            primaryHeading="Get to know us"
+            secondaryHeading="better"
+            description="Ancile Inc. is built on the idea that tech should empower people — not complicate their work. We're consultants, developers, recruiters, and problem-solvers with one mission: to move your business forward."
+            linkHref="/company#team"
+            linkText="Meet the team"
+            className="text-[#330505]"
+            textClassName="text-[#8A846F]"
+          />
+        </div>
       </Container>
     </section>
   );
