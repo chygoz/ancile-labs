@@ -29,7 +29,7 @@ export default function CompanyHero() {
               solutions — all built on trust and real expertise.
             </p>
             <Link
-              href="/strategy"
+              href="#team"
               className="inline-block bg-[#EFD2DC] text-black px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-[#EFD2DC]/90 transition-colors font-semibold"
             >
               Meet The Team

@@ -99,7 +99,7 @@ export default function TalentSection() {
               primaryHeading="Let us help with"
               secondaryHeading="what we do best"
               description="At Ancile Inc., we offer a powerful mix of IT consulting, talent solutions, and web application development — designed to help you scale smarter, build faster, and operate with confidence. Whether you're launching a product, expanding your team, or rethinking your tech strategy, we've got you covered."
-              linkHref="/strategy"
+              linkHref="#contact"
               linkText="Let's Talk Strategy"
               className="text-[#330505]"
               textClassName="text-[#8A846F]"
