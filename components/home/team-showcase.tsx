@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import Image, { type StaticImageData } from "next/image";
 
-import Moustach from "@/public/moustach.webp";
+import Tej from "@/public/tej-kumar.jpeg";
 import Slash from "@/public/slash-vector.svg";
 import Container from "@/components/container";
 import SirBlack from "@/public/sir-black.webp";
@@ -20,8 +20,8 @@ interface TeamMember {
 
 const teamMembers: TeamMember[] = [
   {
-    image: SirBlack,
-    alt: "Professional team member in business attire",
+    image: Tej,
+    alt: "ceo",
   },
   {
     image: Slash,
@@ -33,7 +33,7 @@ const teamMembers: TeamMember[] = [
     alt: "Professional team member in business attire",
   },
   {
-    image: Moustach,
+    image: Tej,
     alt: "Professional team member in business attire",
   },
 ];

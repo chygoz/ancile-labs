@@ -5,6 +5,7 @@ import Image, { StaticImageData } from "next/image";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 
+import Tej from "@/public/tej-kumar.jpeg";
 import SirBlack from "@/public/sir-black.webp";
 import WhiteWoman from "@/public/white-woman.webp";
 import Moustach from "@/public/moustach.webp";
@@ -27,10 +28,10 @@ interface TeamMember {
 const teamMembers: TeamMember[] = [
   {
     id: 1,
-    name: "Sarah McAllister",
-    position: "Product Lead",
-    company: "BrightLayer Tech",
-    image: SirBlack,
+    name: "Tej Kovelamudi",
+    position: "Founder and President",
+    company: "Ancile Canada Inc",
+    image: Tej,
   },
   {
     id: 2,
