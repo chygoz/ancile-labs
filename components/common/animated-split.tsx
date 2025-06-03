@@ -89,7 +89,7 @@ export function AnimatedSplit() {
         </motion.p>
 
         <Link
-          href="/strategy"
+          href="#contact"
           className={cn(
             "inline-block lg:h-12 rounded-full transition-colors font-semibold",
             buttonVariants({ variant: "pink" })

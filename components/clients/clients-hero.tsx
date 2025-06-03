@@ -85,7 +85,7 @@ const ClientsHero = () => {
             </p>
             <div className="text-center lg:text-left">
               <Link
-                href="/strategy"
+                href="#contact"
                 className="inline-block bg-[#EFD2DC] text-black px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-[#EFD2DC]/90 transition-colors font-semibold"
               >
                 Let&apos;s Talk Strategy

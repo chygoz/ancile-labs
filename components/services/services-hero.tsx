@@ -38,7 +38,7 @@ const ServicesHero = () => {
               move you forward — faster, smarter, and with less stress.
             </p>
             <Link
-              href="/strategy"
+              href="#contact"
               className="inline-block bg-[#EFD2DC] text-black px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-[#EFD2DC]/90 transition-colors font-semibold"
             >
               Book Consultation
