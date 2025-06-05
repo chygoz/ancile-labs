@@ -51,6 +51,8 @@ export default function ContactSection() {
   const [turnstileRendered, setTurnstileRendered] = useState(false);
   const turnstileRef = useRef<HTMLDivElement>(null);
   const widgetId = useRef<string>("");
+  const [turnstileError, setTurnstileError] = useState(false);
+  const [isRetrying, setIsRetrying] = useState(false);
 
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
@@ -93,19 +95,23 @@ export default function ContactSection() {
       !turnstileRendered
     ) {
       try {
+        setTurnstileError(false);
         widgetId.current = window.turnstile.render(turnstileRef.current, {
           sitekey:
             process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ||
             "1x00000000000000000000AA",
           callback: (token: string) => {
             setTurnstileToken(token);
+            setTurnstileError(false);
           },
           "error-callback": () => {
             setTurnstileToken("");
+            setTurnstileError(true);
             toast.error("Security verification failed. Please try again.");
           },
           "expired-callback": () => {
             setTurnstileToken("");
+            setTurnstileError(true);
             toast.error("Security verification expired. Please try again.");
           },
           theme: "dark",
@@ -114,6 +120,7 @@ export default function ContactSection() {
         setTurnstileRendered(true);
       } catch (error) {
         console.error("Error rendering Turnstile:", error);
+        setTurnstileError(true);
       }
     }
   };
@@ -152,6 +159,44 @@ export default function ContactSection() {
       }
     }
   };
+
+  const retryTurnstile = async () => {
+    setIsRetrying(true);
+    setTurnstileError(false);
+
+    // Clean up existing widget
+    if (window.turnstile && widgetId.current) {
+      try {
+        window.turnstile.remove(widgetId.current);
+      } catch (error) {
+        console.error("Error removing Turnstile:", error);
+      }
+    }
+
+    // Reset state
+    widgetId.current = "";
+    setTurnstileRendered(false);
+    setTurnstileToken("");
+
+    // Wait a moment before retrying
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    // Try to render again
+    renderTurnstile();
+    setIsRetrying(false);
+  };
+
+  useEffect(() => {
+    if (turnstileLoaded && !turnstileRendered && !turnstileError) {
+      const timeout = setTimeout(() => {
+        if (!turnstileRendered && !turnstileToken) {
+          setTurnstileError(true);
+        }
+      }, 5000); // 5 second timeout
+
+      return () => clearTimeout(timeout);
+    }
+  }, [turnstileLoaded, turnstileRendered, turnstileError, turnstileToken]);
 
   async function onSubmit(values: ContactFormValues) {
     if (!turnstileToken) {
@@ -322,7 +367,44 @@ export default function ContactSection() {
                   {/* Turnstile Widget */}
                   <motion.div variants={itemVariants} className="pt-4">
                     <div className="flex flex-col items-center space-y-2">
-                      <div ref={turnstileRef} className="cf-turnstile"></div>
+                      {!turnstileLoaded && (
+                        <div className="flex items-center space-x-2 text-sm text-[#8A846F]">
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#8A846F]"></div>
+                          <span>Loading security verification...</span>
+                        </div>
+                      )}
+
+                      {turnstileLoaded && !turnstileError && (
+                        <div ref={turnstileRef} className="cf-turnstile"></div>
+                      )}
+
+                      {turnstileError && (
+                        <div className="flex flex-col items-center space-y-3">
+                          <div className="text-center">
+                            <p className="text-sm text-red-600 mb-2">
+                              Security verification failed to load
+                            </p>
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              onClick={retryTurnstile}
+                              disabled={isRetrying}
+                              className="text-xs"
+                            >
+                              {isRetrying ? (
+                                <>
+                                  <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-current mr-2"></div>
+                                  Retrying...
+                                </>
+                              ) : (
+                                "Retry Security Check"
+                              )}
+                            </Button>
+                          </div>
+                        </div>
+                      )}
+
                       <p className="text-xs text-[#8A846F] text-center">
                         Protected by Cloudflare Turnstile
                       </p>

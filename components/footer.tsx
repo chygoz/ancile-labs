@@ -51,10 +51,10 @@ export default function Footer() {
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
               <Image
-                src="/logo.svg"
+                src="/logo.png"
                 alt="Ancile Logo"
-                width={50}
-                height={50}
+                width={42}
+                height={42}
                 className="mr-3"
               />
             </motion.div>
