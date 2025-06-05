@@ -77,10 +77,10 @@ export default function MobileSidebar({ navItems }: { navItems: NavItem[] }) {
                 onClick={() => setIsOpen(false)}
               >
                 <Image
-                  src="/logo.svg"
+                  src="/logo.png"
                   alt="Ancile Logo"
-                  width={40}
-                  height={40}
+                  width={62}
+                  height={62}
                   className="mr-2"
                 />
                 <div className="text-white font-bold flex flex-col">
