@@ -20,6 +20,7 @@ export default function Footer() {
     { name: "Clients", href: "/clients" },
     { name: "Contact us", href: "#contact" },
     { name: "Privacy policy", href: "/privacy-policy" },
+    { name: "Careers", href: "https://career.ancilecanadainc.com" },
   ];
 
   // Show scroll button when page is scrolled down

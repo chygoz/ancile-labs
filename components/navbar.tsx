@@ -27,6 +27,7 @@ export default function Navbar() {
     { name: "Services", href: "/services" },
     { name: "Clients", href: "/clients" },
     { name: "Contact us", href: "#contact" },
+    { name: "Careers", href: "https://career.ancilecanadainc.com" },
   ];
 
   return (
