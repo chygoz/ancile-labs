@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import { toast } from "sonner";
 import { submitGetStartedForm } from "@/actions/get-started";
-import { getStartedFormSchema, GetStartedFormValues } from "@/lib/schamas";
+import { getStartedFormSchema, type GetStartedFormValues } from "@/lib/schamas";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -21,7 +21,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { DialogTrigger } from "@/components/ui/dialog";
 import {
   Select,
   SelectContent,
@@ -34,6 +33,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogDescription,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import { AnimatedHeading } from "@/components/common/animated-heading";
 
@@ -57,8 +57,17 @@ declare global {
   }
 }
 
-export default function GetStartedModal() {
-  const [isOpen, setIsOpen] = useState(false);
+interface GetStartedModalProps {
+  isOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  defaultService?: string;
+}
+
+export default function GetStartedModal({
+  isOpen,
+  onOpenChange,
+  defaultService = "",
+}: GetStartedModalProps = {}) {
   const [turnstileToken, setTurnstileToken] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [turnstileLoaded, setTurnstileLoaded] = useState(false);
@@ -68,16 +77,30 @@ export default function GetStartedModal() {
   const [turnstileError, setTurnstileError] = useState(false);
   const [isRetrying, setIsRetrying] = useState(false);
 
+  // Add internal state for when component is used standalone
+  const [internalIsOpen, setInternalIsOpen] = useState(false);
+
+  // Use external props if provided, otherwise use internal state
+  const modalIsOpen = isOpen !== undefined ? isOpen : internalIsOpen;
+  const setModalOpen = onOpenChange || setInternalIsOpen;
+
   const form = useForm<GetStartedFormValues>({
     resolver: zodResolver(getStartedFormSchema),
     defaultValues: {
       name: "",
       email: "",
       phone: "",
-      serviceRequest: "",
+      serviceRequest: defaultService,
       message: "",
     },
   });
+
+  // Update form when defaultService changes
+  useEffect(() => {
+    if (defaultService) {
+      form.setValue("serviceRequest", defaultService);
+    }
+  }, [defaultService, form]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -213,7 +236,7 @@ export default function GetStartedModal() {
         toast.success(result.message);
         form.reset();
         resetTurnstile();
-        setTimeout(() => setIsOpen(false), 1500);
+        setTimeout(() => setModalOpen(false), 1500);
       } else {
         toast.error(result.message);
         resetTurnstile();
@@ -243,7 +266,7 @@ export default function GetStartedModal() {
   };
 
   const handleOpenChange = (open: boolean) => {
-    setIsOpen(open);
+    setModalOpen(open);
     if (!open) {
       form.reset();
       setTurnstileToken("");
@@ -267,12 +290,14 @@ export default function GetStartedModal() {
         strategy="lazyOnload"
       />
 
-      <Dialog open={isOpen} onOpenChange={handleOpenChange}>
-        <DialogTrigger asChild>
-          <Button className="font-medium transition-colors bg-[#EFD2DC] text-[#330505] hover:bg-[#EFD2DC]/90 rounded-full px-6 py-2">
-            Get Started
-          </Button>
-        </DialogTrigger>
+      <Dialog open={modalIsOpen} onOpenChange={handleOpenChange}>
+        {!isOpen && (
+          <DialogTrigger asChild>
+            <Button className="font-medium transition-colors bg-[#EFD2DC] text-[#330505] hover:bg-[#EFD2DC]/90 rounded-full px-6 py-2">
+              Get Started
+            </Button>
+          </DialogTrigger>
+        )}
         <DialogContent className="sm:max-w-[900px] p-4 lg:p-6 bg-[#FDF5D9] border-[#330505] h-[95vh] max-h-[95vh] w-[95vw] sm:w-full flex flex-col overflow-hidden">
           <div className="flex flex-col h-full">
             <DialogHeader className="text-center p-4 pb-6 flex-shrink-0">
@@ -388,7 +413,7 @@ export default function GetStartedModal() {
                                   <FormControl>
                                     <Select
                                       onValueChange={field.onChange}
-                                      defaultValue={field.value}
+                                      value={field.value}
                                     >
                                       <SelectTrigger className="border-b border-t-0 border-l-0 border-r-0 border-[#8A846F] rounded-none focus:ring-0 focus:border-[#330505] h-auto px-0 py-2 bg-transparent text-sm">
                                         <SelectValue placeholder="Select a service" />

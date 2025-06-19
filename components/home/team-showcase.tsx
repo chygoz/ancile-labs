@@ -33,7 +33,7 @@ const teamMembers: TeamMember[] = [
     alt: "Professional team member in business attire",
   },
   {
-    image: Tej,
+    image: SirBlack,
     alt: "Professional team member in business attire",
   },
 ];

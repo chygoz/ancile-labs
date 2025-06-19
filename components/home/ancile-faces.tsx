@@ -85,7 +85,7 @@ export default function AncileFaces() {
           className="space-y-12"
         >
           <div className="mb-12 lg:mb-24">
-            <AnimatedHeading primaryText="Meet the faces of Ancile Inc." />
+            <AnimatedHeading primaryText="Meet the faces of Ancile Canada Inc." />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
