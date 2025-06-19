@@ -58,7 +58,7 @@ export async function submitGetStartedForm({
   try {
     // Send email using Resend
     const { data, error } = await resend.emails.send({
-      from: "contact@azacdev.com",
+      from: "get-started@ancilecanadainc.com",
       to: ["azacdev@gmail.com"],
       subject: `New Get Started Request from ${name}`,
       react: GetStartedEmail({

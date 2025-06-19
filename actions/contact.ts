@@ -56,7 +56,7 @@ export async function submitContactForm({
   try {
     // Send email using Resend with the new ContactEmail component
     const { data, error } = await resend.emails.send({
-      from: "contact@azacdev.com",
+      from: "contact@ancilecanadainc.com",
       to: ["azacdev@gmail.com"],
       subject: `New Contact from ${name}`,
       react: ContactEmail({
