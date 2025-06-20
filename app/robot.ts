@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://ancile-labs.vercel.app/sitemap.xml",
+    sitemap: "https://ancilecanadainc.com/sitemap.xml",
   };
 }
