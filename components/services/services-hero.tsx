@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import RedSquish from "@/public/red-squish.svg";
 import Container from "@/components/container";
 import { AnimatedHeading } from "@/components/common/animated-heading";
+import { buttonVariants } from "../ui/button";
 
 const ServicesHero = () => {
   return (
@@ -39,7 +40,9 @@ const ServicesHero = () => {
             </p>
             <Link
               href="#contact"
-              className="inline-block bg-[#EFD2DC] text-black px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-[#EFD2DC]/90 transition-colors font-semibold"
+              className={` !rounded-full px-6 ${buttonVariants({
+                variant: "pink",
+              })}`}
             >
               Book Consultation
             </Link>

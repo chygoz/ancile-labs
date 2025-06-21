@@ -19,12 +19,16 @@ import Freshslice from "@/public/freshslice.svg";
 import Delta from "@/public/delta.svg";
 
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import GetStartedModal from "../get-started-modal";
 
 interface LogosMarqueeProps {
   animated?: boolean;
 }
 
 const LogosMarquee = ({ animated = true }: LogosMarqueeProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const companyLogos = [
     { name: "Rogers", src: Rogers },
     { name: "RBC", src: RBC },
@@ -150,10 +154,14 @@ const LogosMarquee = ({ animated = true }: LogosMarqueeProps) => {
           viewport={{ once: true, margin: "-50px" }}
           variants={buttonVariants}
         >
-          <Button variant={"pink"} className="h-12">
+          <Button variant={"pink"} onClick={() => setIsModalOpen(true)}>
             Ready to Begin
           </Button>
         </motion.div>
+      </div>
+
+      <div className="hidden">
+        <GetStartedModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} />
       </div>
     </section>
   );

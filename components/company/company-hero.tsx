@@ -57,7 +57,7 @@ export default function CompanyHero() {
                   src="/girl-glasses.webp"
                   alt="Ancile team members"
                   fill
-                  className="object-cover rounded-t-3xl"
+                  className="not-sm:object-left object-cover rounded-t-3xl"
                   priority
                 />
               </div>

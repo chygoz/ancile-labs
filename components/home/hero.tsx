@@ -8,7 +8,7 @@ import { AnimatedSplit } from "@/components/common/animated-split";
 
 export default function Hero() {
   return (
-    <section className="relative h-screen w-full overflow-hidden">
+    <section className="relative h-screen w-full overflow-hidden bg-[#FDF5D9]">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image

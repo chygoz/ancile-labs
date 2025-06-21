@@ -4,22 +4,44 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Menu } from "lucide-react";
+import { X, Menu, ChevronDown, ChevronRight } from "lucide-react";
 import { usePathname } from "next/navigation";
+
 import GetStartedModal from "./get-started-modal";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 interface NavItem {
   name: string;
   href: string;
 }
 
-export default function MobileSidebar({ navItems }: { navItems: NavItem[] }) {
+interface ServiceItem {
+  title: string;
+  href: string;
+  description: string;
+}
+
+interface MobileSidebarProps {
+  navItems: NavItem[];
+  serviceItems: ServiceItem[];
+}
+
+export default function MobileSidebar({
+  navItems,
+  serviceItems,
+}: MobileSidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
   const pathname = usePathname();
 
   // Close sidebar when route changes
   useEffect(() => {
     setIsOpen(false);
+    setIsServicesOpen(false);
   }, [pathname]);
 
   // Prevent scrolling when sidebar is open
@@ -99,8 +121,87 @@ export default function MobileSidebar({ navItems }: { navItems: NavItem[] }) {
 
             {/* Navigation links */}
             <div className="flex-1 overflow-y-auto py-4">
-              <nav className="flex flex-col space-y-4 px-5">
-                {navItems.map((item) => (
+              <nav className="flex flex-col space-y-2 px-5">
+                {/* Company Link */}
+                <Link
+                  href="/company"
+                  className={`text-white hover:text-[#EFD2DC] transition-colors py-2 ${
+                    pathname === "/company"
+                      ? "font-medium border-l-2 border-[#EFD2DC] pl-2"
+                      : ""
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Company
+                </Link>
+
+                {/* Services Collapsible */}
+                <Collapsible
+                  open={isServicesOpen}
+                  onOpenChange={setIsServicesOpen}
+                >
+                  <div className="space-y-2">
+                    {/* Services Main Link */}
+                    <div className="flex items-center justify-between">
+                      <Link
+                        href="/services"
+                        className={`text-white hover:text-[#EFD2DC] transition-colors py-2 flex-1 ${
+                          pathname === "/services"
+                            ? "font-medium border-l-2 border-[#EFD2DC] pl-2"
+                            : ""
+                        }`}
+                        onClick={() => setIsOpen(false)}
+                      >
+                        Services
+                      </Link>
+                      <CollapsibleTrigger className="text-white hover:text-[#EFD2DC] transition-colors p-1 cursor-pointer">
+                        {isServicesOpen ? (
+                          <ChevronDown size={16} />
+                        ) : (
+                          <ChevronRight size={16} />
+                        )}
+                      </CollapsibleTrigger>
+                    </div>
+
+                    {/* Services Submenu */}
+                    <CollapsibleContent className="space-y-1">
+                      <AnimatePresence>
+                        {isServicesOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="ml-4 space-y-3 border-l border-[#4a0a0a] pl-4"
+                          >
+                            {serviceItems.map((item) => (
+                              <Link
+                                key={item.href}
+                                href={item.href}
+                                className={`block text-white/90 hover:text-[#EFD2DC] transition-colors ${
+                                  pathname === item.href
+                                    ? "font-medium text-[#EFD2DC]"
+                                    : ""
+                                }`}
+                                onClick={() => setIsOpen(false)}
+                              >
+                                <div className="text-sm font-medium">
+                                  {item.title}
+                                </div>
+                                <div className="text-xs text-white/70 mt-1 line-clamp-2">
+                                  {item.description}
+                                </div>
+                              </Link>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </CollapsibleContent>
+                  </div>
+                </Collapsible>
+
+                {/* Other Navigation Items */}
+                {navItems.slice(1).map((item) => (
                   <Link
                     key={item.name}
                     href={item.href}
