@@ -1,5 +1,4 @@
 import { AnimatedSplitContent } from "@/components/common/animated-split-content";
-import ContactSection from "@/components/common/contact-section";
 import FeaturesGrid from "@/components/common/features-grid";
 import LogosMarquee from "@/components/common/logos-marquee";
 import Container from "@/components/container";
@@ -96,7 +95,6 @@ const SoftwareDevelopmentPage = () => {
       <div className="pt-10 lg:pt-20 bg-[#FDF5D9]">
         <LogosMarquee />
       </div>
-      <ContactSection />
     </div>
   );
 };

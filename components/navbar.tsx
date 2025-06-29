@@ -35,7 +35,7 @@ export default function Navbar() {
   const navItems = [
     { name: "Company", href: "/company" },
     { name: "Clients", href: "/clients" },
-    { name: "Careers", href: "https://career.ancilecanadainc.com" },
+    { name: "Careers", href: "/careers" },
     { name: "Contact us", href: "#contact" },
   ];
 

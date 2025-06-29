@@ -13,7 +13,7 @@ import { buttonVariants } from "../ui/button";
 
 const ClientsHero = () => {
   return (
-    <section className="relative min-h-screen w-full bg-[#330505] overflow-hidden pt-16 md:pt-20 lg:pt-24">
+    <section className="relative min-h-dvh w-full bg-[#330505] overflow-hidden pt-16 md:pt-20 lg:pt-24">
       {/* Image Section */}
       <Container className="relative flex flex-col md:flex-row justify-center md:justify-between items-center gap-8 md:gap-0">
         <motion.div

@@ -100,7 +100,7 @@ export default function PrivacyPolicy() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-dvh">
       {/* Hero Section */}
       <section className="bg-[#330505] text-white overflow-hidden">
         <Container className="py-20" as="div">

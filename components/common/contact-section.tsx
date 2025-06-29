@@ -1,13 +1,15 @@
 "use client";
 
-import Script from "next/script";
 import { Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { useInView } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { TurnstileWidget } from "../turnstile-widget";
+import { useTurnstile } from "@/hooks/use-turnstile";
 import { toast } from "sonner";
 import { submitContactForm } from "@/actions/contact";
 import { contactFormSchema, type ContactFormValues } from "@/lib/schamas";
@@ -24,35 +26,10 @@ import { Textarea } from "@/components/ui/textarea";
 import Container from "@/components/container";
 import { AnimatedHeading } from "@/components/common/animated-heading";
 
-declare global {
-  interface Window {
-    turnstile: {
-      render: (
-        element: string | HTMLElement,
-        options: {
-          sitekey: string;
-          callback: (token: string) => void;
-          "error-callback"?: () => void;
-          "expired-callback"?: () => void;
-          theme?: "light" | "dark" | "auto";
-          size?: "normal" | "compact";
-        }
-      ) => string;
-      reset: (widgetId?: string) => void;
-      remove: (widgetId?: string) => void;
-    };
-  }
-}
-
 export default function ContactSection() {
-  const [turnstileToken, setTurnstileToken] = useState<string>("");
+  const pathname = usePathname();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [turnstileLoaded, setTurnstileLoaded] = useState(false);
-  const [turnstileRendered, setTurnstileRendered] = useState(false);
-  const turnstileRef = useRef<HTMLDivElement>(null);
-  const widgetId = useRef<string>("");
-  const [turnstileError, setTurnstileError] = useState(false);
-  const [isRetrying, setIsRetrying] = useState(false);
+  const { token: turnstileToken, reset: resetTurnstile } = useTurnstile();
 
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
@@ -66,6 +43,12 @@ export default function ContactSection() {
 
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+
+  const isCareerWithId = /^\/careers\/[^/]+$/.test(pathname);
+
+  if (isCareerWithId) {
+    return null;
+  }
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -86,117 +69,6 @@ export default function ContactSection() {
       transition: { duration: 0.6, ease: "easeOut" },
     },
   };
-
-  const renderTurnstile = () => {
-    if (
-      window.turnstile &&
-      turnstileRef.current &&
-      !widgetId.current &&
-      !turnstileRendered
-    ) {
-      try {
-        setTurnstileError(false);
-        widgetId.current = window.turnstile.render(turnstileRef.current, {
-          sitekey:
-            process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ||
-            "1x00000000000000000000AA",
-          callback: (token: string) => {
-            setTurnstileToken(token);
-            setTurnstileError(false);
-          },
-          "error-callback": () => {
-            setTurnstileToken("");
-            setTurnstileError(true);
-            toast.error("Security verification failed. Please try again.");
-          },
-          "expired-callback": () => {
-            setTurnstileToken("");
-            setTurnstileError(true);
-            toast.error("Security verification expired. Please try again.");
-          },
-          theme: "dark",
-          size: "normal",
-        });
-        setTurnstileRendered(true);
-      } catch (error) {
-        console.error("Error rendering Turnstile:", error);
-        setTurnstileError(true);
-      }
-    }
-  };
-
-  useEffect(() => {
-    if (turnstileLoaded && !turnstileRendered) {
-      const timer = setTimeout(renderTurnstile, 100);
-      return () => clearTimeout(timer);
-    }
-  }, [turnstileLoaded, turnstileRendered]);
-
-  // Cleanup effect
-  useEffect(() => {
-    return () => {
-      if (window.turnstile && widgetId.current) {
-        try {
-          window.turnstile.remove(widgetId.current);
-        } catch (error) {
-          console.error("Error removing Turnstile:", error);
-        }
-      }
-    };
-  }, []);
-
-  const resetTurnstile = () => {
-    if (window.turnstile && widgetId.current && turnstileRendered) {
-      try {
-        window.turnstile.reset(widgetId.current);
-        setTurnstileToken("");
-      } catch (error) {
-        console.error("Error resetting Turnstile:", error);
-        // If reset fails, try to re-render
-        setTurnstileRendered(false);
-        widgetId.current = "";
-        setTimeout(renderTurnstile, 100);
-      }
-    }
-  };
-
-  const retryTurnstile = async () => {
-    setIsRetrying(true);
-    setTurnstileError(false);
-
-    // Clean up existing widget
-    if (window.turnstile && widgetId.current) {
-      try {
-        window.turnstile.remove(widgetId.current);
-      } catch (error) {
-        console.error("Error removing Turnstile:", error);
-      }
-    }
-
-    // Reset state
-    widgetId.current = "";
-    setTurnstileRendered(false);
-    setTurnstileToken("");
-
-    // Wait a moment before retrying
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
-    // Try to render again
-    renderTurnstile();
-    setIsRetrying(false);
-  };
-
-  useEffect(() => {
-    if (turnstileLoaded && !turnstileRendered && !turnstileError) {
-      const timeout = setTimeout(() => {
-        if (!turnstileRendered && !turnstileToken) {
-          setTurnstileError(true);
-        }
-      }, 5000); // 5 second timeout
-
-      return () => clearTimeout(timeout);
-    }
-  }, [turnstileLoaded, turnstileRendered, turnstileError, turnstileToken]);
 
   async function onSubmit(values: ContactFormValues) {
     if (!turnstileToken) {
@@ -230,104 +102,49 @@ export default function ContactSection() {
   }
 
   return (
-    <>
-      <Script
-        src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-        onLoad={() => setTurnstileLoaded(true)}
-        strategy="lazyOnload"
-      />
-
-      <section className="w-full bg-[#FDF5D9]" ref={sectionRef} id="contact">
-        <Container className="py-16 md:py-24">
-          <div className="grid gap-8 md:grid-cols-2 md:gap-12 lg:gap-16">
-            <div>
-              <AnimatedHeading
-                primaryText="Let's get you set up for success"
-                textColor="#330505"
-              />
-            </div>
-            <motion.div
-              className="space-y-6"
-              initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-              variants={containerVariants}
+    <section className="w-full bg-[#FDF5D9]" ref={sectionRef} id="contact">
+      <Container className="py-16 md:py-24">
+        <div className="grid gap-8 md:grid-cols-2 md:gap-12 lg:gap-16">
+          <div>
+            <AnimatedHeading
+              primaryText="Let's get you set up for success"
+              textColor="#330505"
+            />
+          </div>
+          <motion.div
+            className="space-y-6"
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            variants={containerVariants}
+          >
+            <motion.p
+              className="text-lg text-[#8A846F]"
+              variants={itemVariants}
             >
-              <motion.p
-                className="text-lg text-[#8A846F]"
-                variants={itemVariants}
+              Whether you need one role filled or an entire product delivered —
+              we&apos;re here to help. Reach out and let&apos;s discuss how
+              Ancile Inc. can support your next step.
+            </motion.p>
+
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-8"
               >
-                Whether you need one role filled or an entire product delivered
-                — we&apos;re here to help. Reach out and let&apos;s discuss how
-                Ancile Inc. can support your next step.
-              </motion.p>
-
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-8"
+                <motion.div
+                  className="grid gap-8 md:grid-cols-2"
+                  variants={containerVariants}
                 >
-                  <motion.div
-                    className="grid gap-8 md:grid-cols-2"
-                    variants={containerVariants}
-                  >
-                    <motion.div variants={itemVariants}>
-                      <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <div>
-                                <p className="text-[#5a3d2d] font-medium lg:text-xl">
-                                  Name
-                                </p>
-                                <Input
-                                  {...field}
-                                  className="border-0 border-b border-[#5a3d2d] rounded-none px-0 py-2 bg-transparent focus-visible:ring-0 focus-visible:border-[#3a0e00]"
-                                />
-                              </div>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </motion.div>
-
-                    <motion.div variants={itemVariants}>
-                      <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <div>
-                                <p className="text-[#5a3d2d] font-medium lg:text-xl">
-                                  Email
-                                </p>
-                                <Input
-                                  type="email"
-                                  {...field}
-                                  className="border-0 border-b border-[#5a3d2d] rounded-none px-0 py-2 bg-transparent focus-visible:ring-0 focus-visible:border-[#3a0e00]"
-                                />
-                              </div>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </motion.div>
-                  </motion.div>
-
                   <motion.div variants={itemVariants}>
                     <FormField
                       control={form.control}
-                      name="subject"
+                      name="name"
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
                             <div>
                               <p className="text-[#5a3d2d] font-medium lg:text-xl">
-                                Subject
+                                Name
                               </p>
                               <Input
                                 {...field}
@@ -344,17 +161,18 @@ export default function ContactSection() {
                   <motion.div variants={itemVariants}>
                     <FormField
                       control={form.control}
-                      name="message"
+                      name="email"
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
                             <div>
                               <p className="text-[#5a3d2d] font-medium lg:text-xl">
-                                Message
+                                Email
                               </p>
-                              <Textarea
+                              <Input
+                                type="email"
                                 {...field}
-                                className="min-h-[120px] border-0 border-b border-[#5a3d2d] rounded-none px-0 py-2 bg-transparent focus-visible:ring-0 focus-visible:border-[#3a0e00] resize-none"
+                                className="border-0 border-b border-[#5a3d2d] rounded-none px-0 py-2 bg-transparent focus-visible:ring-0 focus-visible:border-[#3a0e00]"
                               />
                             </div>
                           </FormControl>
@@ -363,81 +181,82 @@ export default function ContactSection() {
                       )}
                     />
                   </motion.div>
+                </motion.div>
 
-                  {/* Turnstile Widget */}
-                  <motion.div variants={itemVariants} className="pt-4">
-                    <div className="flex flex-col items-center space-y-2">
-                      {!turnstileLoaded && (
-                        <div className="flex items-center space-x-2 text-sm text-[#8A846F]">
-                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#8A846F]"></div>
-                          <span>Loading security verification...</span>
-                        </div>
-                      )}
-
-                      {turnstileLoaded && !turnstileError && (
-                        <div ref={turnstileRef} className="cf-turnstile"></div>
-                      )}
-
-                      {turnstileError && (
-                        <div className="flex flex-col items-center space-y-3">
-                          <div className="text-center">
-                            <p className="text-sm text-red-600 mb-2">
-                              Security verification failed to load
+                <motion.div variants={itemVariants}>
+                  <FormField
+                    control={form.control}
+                    name="subject"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <div>
+                            <p className="text-[#5a3d2d] font-medium lg:text-xl">
+                              Subject
                             </p>
-                            <Button
-                              type="button"
-                              variant="outline"
-                              size="sm"
-                              onClick={retryTurnstile}
-                              disabled={isRetrying}
-                              className="text-xs"
-                            >
-                              {isRetrying ? (
-                                <>
-                                  <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-current mr-2"></div>
-                                  Retrying...
-                                </>
-                              ) : (
-                                "Retry Security Check"
-                              )}
-                            </Button>
+                            <Input
+                              {...field}
+                              className="border-0 border-b border-[#5a3d2d] rounded-none px-0 py-2 bg-transparent focus-visible:ring-0 focus-visible:border-[#3a0e00]"
+                            />
                           </div>
-                        </div>
-                      )}
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </motion.div>
 
-                      <p className="text-xs text-[#8A846F] text-center">
-                        Protected by Cloudflare Turnstile
-                      </p>
-                    </div>
-                  </motion.div>
+                <motion.div variants={itemVariants}>
+                  <FormField
+                    control={form.control}
+                    name="message"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <div>
+                            <p className="text-[#5a3d2d] font-medium lg:text-xl">
+                              Message
+                            </p>
+                            <Textarea
+                              {...field}
+                              className="min-h-[120px] border-0 border-b border-[#5a3d2d] rounded-none px-0 py-2 bg-transparent focus-visible:ring-0 focus-visible:border-[#3a0e00] resize-none"
+                            />
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </motion.div>
 
-                  <motion.div
-                    variants={itemVariants}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                <TurnstileWidget />
+
+                <motion.div
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <Button
+                    type="submit"
+                    variant={"pink"}
+                    disabled={!turnstileToken || isSubmitting}
+                    className="w-full rounded-full bg-[#EFD2DC] text-black hover:bg-[#EFD2DC]/90 lg:h-12"
                   >
-                    <Button
-                      type="submit"
-                      variant={"pink"}
-                      disabled={!turnstileToken || isSubmitting}
-                      className="w-full rounded-full bg-[#EFD2DC] text-black hover:bg-[#EFD2DC]/90 lg:h-12"
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <Loader2 className="size-4 mr-2 animate-spin" />{" "}
-                          Sending...
-                        </>
-                      ) : (
-                        "Send Message"
-                      )}
-                    </Button>
-                  </motion.div>
-                </form>
-              </Form>
-            </motion.div>
-          </div>
-        </Container>
-      </section>
-    </>
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="size-4 mr-2 animate-spin" />{" "}
+                        Sending...
+                      </>
+                    ) : (
+                      "Send Message"
+                    )}
+                  </Button>
+                </motion.div>
+              </form>
+            </Form>
+          </motion.div>
+        </div>
+      </Container>
+    </section>
   );
 }

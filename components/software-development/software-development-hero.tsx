@@ -12,7 +12,7 @@ const SoftwareDevelopmentHero = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <section className="relative min-h-screen w-full bg-[#330505] overflow-hidden pt-24">
+    <section className="relative min-h-dvh w-full bg-[#330505] overflow-hidden pt-24">
       {/* Pink design element */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-0 right-0 w-full h-full">

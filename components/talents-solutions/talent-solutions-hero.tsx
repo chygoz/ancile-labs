@@ -12,7 +12,7 @@ const TalentSolutionsHero = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <section className="relative min-h-screen w-full bg-[#330505] overflow-hidden pt-24">
+    <section className="relative min-h-dvh w-full bg-[#330505] overflow-hidden pt-24">
       <div className="text-[#FDF5D9] relative z-10">
         <Container className="flex flex-col items-center justify-center gap-8 lg:gap-40 py-16 lg:py-24 text-center">
           <AnimatedHeading

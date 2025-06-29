@@ -11,7 +11,7 @@ import { buttonVariants } from "../ui/button";
 
 const ServicesHero = () => {
   return (
-    <section className="relative min-h-screen w-full bg-[#330505] overflow-hidden pt-24">
+    <section className="relative min-h-dvh w-full bg-[#330505] overflow-hidden pt-24">
       <div className="absolute inset-0 z-0">
         <Image
           src={RedSquish}

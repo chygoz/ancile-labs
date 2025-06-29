@@ -1,5 +1,4 @@
 import Team from "@/components/company/team";
-import ContactSection from "@/components/common/contact-section";
 import CompanyHero from "@/components/company/company-hero";
 import TestimonialCarousel from "@/components/home/testimonial-carousel";
 import SimplifyTech from "@/components/company/simplify-tech";
@@ -15,7 +14,6 @@ export default function CompanyPage() {
       <TestimonialCarousel />
       <Team />
       <AncileFaces />
-      <ContactSection />
     </div>
   );
 }

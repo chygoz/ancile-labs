@@ -12,7 +12,7 @@ const ITConsultingHero = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <section className="relative min-h-screen w-full bg-[#330505] overflow-hidden pt-24">
+    <section className="relative min-h-dvh w-full bg-[#330505] overflow-hidden pt-24">
       {/* Background Image */}
 
       {/* Red design element */}
