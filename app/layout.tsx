@@ -6,6 +6,7 @@ import { Toaster } from "sonner";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import ContactSection from "@/components/common/contact-section";
+import { TurnstileProvider } from "@/providers/turnstile-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -95,11 +96,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} flex flex-col antialiased scroll-smooth overflow-x-hidden min-h-dvh font-sans bg-[#FDF5D9]`}
       >
-        <Toaster position="top-right" richColors />
-        <Navbar />
-        <main className="flex-grow mt-[100px]">{children}</main>
-        <ContactSection />
-        <Footer />
+        <TurnstileProvider>
+          <Toaster position="top-right" richColors />
+          <Navbar />
+          <main className="flex-grow mt-[100px]">{children}</main>
+          <ContactSection />
+          <Footer />
+        </TurnstileProvider>
       </body>
     </html>
   );

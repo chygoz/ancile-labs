@@ -69,7 +69,7 @@ export const applicationFormSchema = z.object({
   cover_letter: z
     .string()
     .min(1, "Cover letter is required")
-    .min(50, "Cover letter must be at least 50 characters"),
+    .min(20, "Cover letter must be at least 20 characters"),
   resume: z
     .instanceof(File, { message: "Resume is required" })
     .refine(

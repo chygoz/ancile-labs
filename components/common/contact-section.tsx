@@ -4,15 +4,14 @@ import { Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import { TurnstileWidget } from "../turnstile-widget";
-import { useTurnstile } from "@/hooks/use-turnstile";
 import { toast } from "sonner";
 import { submitContactForm } from "@/actions/contact";
 import { contactFormSchema, type ContactFormValues } from "@/lib/schamas";
+
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -29,7 +28,7 @@ import { AnimatedHeading } from "@/components/common/animated-heading";
 export default function ContactSection() {
   const pathname = usePathname();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { token: turnstileToken, reset: resetTurnstile } = useTurnstile();
+  const [turnstileToken, setTurnstileToken] = useState<string>("");
 
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
@@ -43,6 +42,19 @@ export default function ContactSection() {
 
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+
+  const handleTurnstileSuccess = useCallback((token: string) => {
+    console.log(
+      "✅ Contact Section received Turnstile token:",
+      token.substring(0, 50) + "..."
+    );
+    setTurnstileToken(token);
+  }, []);
+
+  const handleTurnstileError = useCallback(() => {
+    console.log("❌ Contact Section: Turnstile error/expired");
+    setTurnstileToken("");
+  }, []);
 
   const isCareerWithId = /^\/careers\/[^/]+$/.test(pathname);
 
@@ -71,6 +83,14 @@ export default function ContactSection() {
   };
 
   async function onSubmit(values: ContactFormValues) {
+    console.log("🚀 Form submission started");
+    console.log(
+      "🔐 Current turnstile token:",
+      turnstileToken
+        ? "Present (" + turnstileToken.length + " chars)"
+        : "Missing"
+    );
+
     if (!turnstileToken) {
       toast.error("Please complete the security verification.");
       return;
@@ -79,23 +99,25 @@ export default function ContactSection() {
     setIsSubmitting(true);
 
     try {
+      console.log("📤 Sending form data to server...");
       const result = await submitContactForm({
         formData: values,
         turnstileToken,
       });
 
+      console.log("📥 Server response:", result);
+
       if (result.success) {
         toast.success(result.message);
         form.reset();
-        resetTurnstile();
+        // Only clear token after successful submission
+        setTurnstileToken("");
       } else {
         toast.error(result.message);
-        resetTurnstile();
       }
     } catch (error) {
-      console.error("Submission error:", error);
+      console.error("💥 Submission error:", error);
       toast.error("An unexpected error occurred. Please try again.");
-      resetTurnstile();
     } finally {
       setIsSubmitting(false);
     }
@@ -111,6 +133,7 @@ export default function ContactSection() {
               textColor="#330505"
             />
           </div>
+
           <motion.div
             className="space-y-6"
             initial="hidden"
@@ -229,7 +252,11 @@ export default function ContactSection() {
                   />
                 </motion.div>
 
-                <TurnstileWidget />
+                <TurnstileWidget
+                  onSuccess={handleTurnstileSuccess}
+                  onError={handleTurnstileError}
+                  onExpired={handleTurnstileError}
+                />
 
                 <motion.div
                   variants={itemVariants}

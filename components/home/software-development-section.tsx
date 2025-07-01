@@ -1,15 +1,17 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 
 import Container from "@/components/container";
 import { Button } from "@/components/ui/button";
+import GetStartedModal from "../get-started-modal";
 
 export default function SoftwareDevelopmentSection() {
   const sectionRef = useRef(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
   return (
@@ -57,7 +59,9 @@ export default function SoftwareDevelopmentSection() {
                 transition={{ delay: 0.7, duration: 0.5 }}
                 className="absolute bottom-1/2 left-1/2 transform -translate-x-1/2"
               >
-                <Button variant={"pink"}>Start Your Project</Button>
+                <Button onClick={() => setIsModalOpen(true)} variant={"pink"}>
+                  Start Your Project
+                </Button>
               </motion.div>
             </div>
           </motion.div>
@@ -78,6 +82,10 @@ export default function SoftwareDevelopmentSection() {
           </motion.div>
         </motion.div>
       </Container>
+
+      <div className="hidden">
+        <GetStartedModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} />
+      </div>
     </section>
   );
 }

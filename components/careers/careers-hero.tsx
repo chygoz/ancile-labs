@@ -10,7 +10,7 @@ const CareersHero = () => {
   return (
     <section className="relative min-h-dvh w-full bg-[#330505] overflow-hidden pt-24">
       <div className="text-[#FDF5D9]">
-        <Container className="flex flex-col lg:flex-row items-start justify-between gap-8 lg:gap-40 py-16 lg:py-24">
+        <Container className="flex flex-col lg:flex-row items-start justify-between gap-8 lg:gap-30 py-16 lg:py-24">
           {/* Left side - Heading */}
           <AnimatedHeading primaryText="JOIN OUR TEAM" />
 
@@ -45,7 +45,7 @@ const CareersHero = () => {
             <Container>
               <div className="relative w-full h-[437px] rounded-t-3xl">
                 <Image
-                  src="/girl-glasses.webp"
+                  src="/hiring.webp"
                   alt="Ancile team collaboration workspace"
                   fill
                   className="object-cover rounded-t-3xl"

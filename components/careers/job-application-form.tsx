@@ -3,7 +3,7 @@
 import type React from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, Upload, CheckCircle } from "lucide-react";
 import {
@@ -27,7 +27,6 @@ import {
   type ApplicationFormValues,
 } from "@/lib/schamas";
 import { TurnstileWidget } from "@/components/turnstile-widget";
-import { useTurnstile } from "@/hooks/use-turnstile";
 
 interface JobApplicationFormProps {
   jobId: string;
@@ -41,8 +40,7 @@ export default function JobApplicationForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
-  const { token: turnstileToken, reset: resetTurnstile } = useTurnstile();
+  const [turnstileToken, setTurnstileToken] = useState<string>("");
 
   const form = useForm<ApplicationFormValues>({
     resolver: zodResolver(applicationFormSchema),
@@ -57,6 +55,18 @@ export default function JobApplicationForm({
       resume: undefined as any,
     },
   });
+
+  // Handle Turnstile success
+  const handleTurnstileSuccess = useCallback((token: string) => {
+    console.log("Job Application Form received Turnstile token");
+    setTurnstileToken(token);
+  }, []);
+
+  // Handle Turnstile error/expiry
+  const handleTurnstileError = useCallback(() => {
+    console.log("Job Application Form: Turnstile error/expired");
+    setTurnstileToken("");
+  }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -81,6 +91,8 @@ export default function JobApplicationForm({
   };
 
   const onSubmit = async (data: ApplicationFormValues) => {
+    console.log("Job Application Form submission started");
+
     setIsSubmitting(true);
 
     if (!turnstileToken) {
@@ -114,11 +126,11 @@ export default function JobApplicationForm({
         toast.success("Application submitted successfully!");
       } else {
         toast.error(result.error || "Failed to submit application");
-        resetTurnstile();
+        setTurnstileToken("");
       }
     } catch (error) {
       toast.error("An unexpected error occurred");
-      resetTurnstile();
+      setTurnstileToken("");
     } finally {
       setIsSubmitting(false);
     }
@@ -329,7 +341,11 @@ export default function JobApplicationForm({
           )}
         />
 
-        <TurnstileWidget />
+        <TurnstileWidget
+          onSuccess={handleTurnstileSuccess}
+          onError={handleTurnstileError}
+          onExpired={handleTurnstileError}
+        />
 
         <Button
           type="submit"

@@ -13,6 +13,12 @@ const TalentSolutionsHero = () => {
 
   return (
     <section className="relative min-h-dvh w-full bg-[#330505] overflow-hidden pt-24">
+      <div className="absolute inset-0 z-0">
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="absolute top-1/4 left-0 w-full h-32 bg-[#A20F0F] transform -skew-y-2 opacity-80"></div>
+        </div>
+      </div>
+
       <div className="text-[#FDF5D9] relative z-10">
         <Container className="flex flex-col items-center justify-center gap-8 lg:gap-40 py-16 lg:py-24 text-center">
           <AnimatedHeading

@@ -60,7 +60,7 @@ const SimplifyTech = () => {
             </motion.p>
 
             <Link
-              href={"#contact"}
+              href={"/services"}
               className={cn(
                 "inline-block lg:h-12 rounded-full transition-colors font-semibold",
                 buttonVariants({ variant: "pink" })

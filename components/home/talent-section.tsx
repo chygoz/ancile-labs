@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
@@ -8,11 +8,13 @@ import { useInView } from "framer-motion";
 import Container from "@/components/container";
 import { Button } from "@/components/ui/button";
 import { AnimatedSplitContent } from "@/components/common/animated-split-content";
+import GetStartedModal from "../get-started-modal";
 
 export default function TalentSection() {
   const headingRef = useRef(null);
   const imageRef = useRef(null);
   const buttonsRef = useRef(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const isHeadingInView = useInView(headingRef, { once: true, amount: 0.5 });
   const isImageInView = useInView(imageRef, { once: true, amount: 0.3 });
@@ -59,9 +61,23 @@ export default function TalentSection() {
                 animate={isImageInView ? { y: 25, opacity: 1 } : {}}
                 transition={{ delay: 0.6, duration: 0.5 }}
               >
-                <Button variant={"pink"}> Need New Talent?</Button>
+                <Button
+                  variant={"pink"}
+                  onClick={() => setIsModalOpen(true)}
+                  className="font-semibold"
+                >
+                  {" "}
+                  Need New Talent?
+                </Button>
               </motion.div>
             </div>
+          </div>
+
+          <div className="hidden">
+            <GetStartedModal
+              isOpen={isModalOpen}
+              onOpenChange={setIsModalOpen}
+            />
           </div>
 
           <motion.div

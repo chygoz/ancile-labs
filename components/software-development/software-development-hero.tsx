@@ -15,8 +15,8 @@ const SoftwareDevelopmentHero = () => {
     <section className="relative min-h-dvh w-full bg-[#330505] overflow-hidden pt-24">
       {/* Pink design element */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-0 right-0 w-full h-full">
-          <div className="absolute top-1/3 right-0 w-2/3 h-40 bg-[#A20F0F] transform skew-y-2 opacity-60"></div>
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="absolute top-1/4 left-0 w-full h-32 bg-[#A20F0F] transform -skew-y-2 opacity-80"></div>
         </div>
       </div>
 

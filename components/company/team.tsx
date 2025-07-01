@@ -28,7 +28,7 @@ const Team = () => {
   const isInView = useInView(containerRef, { once: true, amount: 0.2 });
 
   return (
-    <div className=" bg-[#FDF5D9]">
+    <div className="bg-[#FDF5D9]" id="team">
       <Container className="grid md:grid-cols-2 pt-12 md:pt-24 gap-12 lg:gap-24">
         <div
           ref={ref}

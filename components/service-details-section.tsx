@@ -104,7 +104,7 @@ const ServiceDetailsSection = ({
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-white text-base">
+                <CardDescription className="text-[#FDF5D9] text-base">
                   {service.description}
                 </CardDescription>
               </CardContent>

@@ -2,7 +2,7 @@
 
 import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
@@ -35,7 +35,6 @@ import {
 } from "@/components/ui/dialog";
 import { AnimatedHeading } from "@/components/common/animated-heading";
 import { TurnstileWidget } from "./turnstile-widget";
-import { useTurnstile } from "@/hooks/use-turnstile";
 
 interface GetStartedModalProps {
   isOpen?: boolean;
@@ -49,6 +48,7 @@ export default function GetStartedModal({
   defaultService = "",
 }: GetStartedModalProps = {}) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string>("");
 
   // Add internal state for when component is used standalone
   const [internalIsOpen, setInternalIsOpen] = useState(false);
@@ -56,9 +56,6 @@ export default function GetStartedModal({
   // Use external props if provided, otherwise use internal state
   const modalIsOpen = isOpen !== undefined ? isOpen : internalIsOpen;
   const setModalOpen = onOpenChange || setInternalIsOpen;
-
-  // Only initialize Turnstile when modal is open
-  const { token: turnstileToken, reset: resetTurnstile } = useTurnstile();
 
   const form = useForm<GetStartedFormValues>({
     resolver: zodResolver(getStartedFormSchema),
@@ -77,6 +74,21 @@ export default function GetStartedModal({
       form.setValue("serviceRequest", defaultService);
     }
   }, [defaultService, form]);
+
+  // Handle Turnstile success
+  const handleTurnstileSuccess = useCallback((token: string) => {
+    console.log(
+      "Get Started Modal received Turnstile token:",
+      token.substring(0, 20) + "..."
+    );
+    setTurnstileToken(token);
+  }, []);
+
+  // Handle Turnstile error/expiry
+  const handleTurnstileError = useCallback(() => {
+    console.log("Get Started Modal: Turnstile error/expired");
+    setTurnstileToken("");
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -105,25 +117,50 @@ export default function GetStartedModal({
     }
 
     setIsSubmitting(true);
+
+    // try {
+    //   const result = await submitGetStartedForm({
+    //     formData: values,
+    //     turnstileToken,
+    //   });
+
+    //   if (result.success) {
+    //     toast.success(result.message);
+    //     form.reset();
+    //     setTurnstileToken("");
+    //     setTimeout(() => setModalOpen(false), 1500);
+    //   } else {
+    //     toast.error(result.message);
+    //     setTurnstileToken("");
+    //   }
+    // } catch (error) {
+    //   console.error("Submission error:", error);
+    //   toast.error("An unexpected error occurred. Please try again.");
+    //   setTurnstileToken("");
+    // } finally {
+    //   setIsSubmitting(false);
+    // }
+
     try {
+      console.log("📤 Sending form data to server...");
       const result = await submitGetStartedForm({
         formData: values,
         turnstileToken,
       });
 
+      console.log("📥 Server response:", result);
+
       if (result.success) {
         toast.success(result.message);
         form.reset();
-        resetTurnstile();
-        setTimeout(() => setModalOpen(false), 1500);
+        // Only clear token after successful submission
+        setTurnstileToken("");
       } else {
         toast.error(result.message);
-        resetTurnstile();
       }
     } catch (error) {
-      console.error("Submission error:", error);
+      console.error("💥 Submission error:", error);
       toast.error("An unexpected error occurred. Please try again.");
-      resetTurnstile();
     } finally {
       setIsSubmitting(false);
     }
@@ -133,7 +170,7 @@ export default function GetStartedModal({
     setModalOpen(open);
     if (!open) {
       form.reset();
-      resetTurnstile();
+      setTurnstileToken("");
     }
   };
 
@@ -311,7 +348,11 @@ export default function GetStartedModal({
                       {/* Only render Turnstile when modal is open */}
                       {modalIsOpen && (
                         <motion.div variants={itemVariants}>
-                          <TurnstileWidget />
+                          <TurnstileWidget
+                            onSuccess={handleTurnstileSuccess}
+                            onError={handleTurnstileError}
+                            onExpired={handleTurnstileError}
+                          />
                         </motion.div>
                       )}
                     </motion.div>

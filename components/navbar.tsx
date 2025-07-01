@@ -41,6 +41,12 @@ export default function Navbar() {
 
   const serviceItems = [
     {
+      title: "Services",
+      href: "/services",
+      description:
+        "Explore our range of expert solutions designed to drive growth, enhance efficiency, and support your business objectives.",
+    },
+    {
       title: "IT Consulting & Corporate Trainings",
       href: "/services/it-consulting",
       description:
