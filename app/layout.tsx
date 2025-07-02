@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "./opengraph-image.png",
         width: 1200,
         height: 630,
         alt: "Ancile Canada Inc - Your trusted partner for staffing, study abroad, and technology consulting",
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
       "Ancile Canada Inc - Expert Staffing, Study Abroad & Technology Consulting",
     description:
       "Your trusted partner for Study Abroad services, expert Staffing & Recruiting services, and Technology Consulting.",
-    images: ["/og-image.jpg"],
+    images: ["./opengraph-image.png"],
     creator: "@ancilecanada",
   },
   robots: {
