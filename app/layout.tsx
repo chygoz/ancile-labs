@@ -86,6 +86,7 @@ export const metadata: Metadata = {
   },
   category: "business",
 };
+
 export default function RootLayout({
   children,
 }: Readonly<{
