@@ -23,7 +23,7 @@ const SoftwareDevelopmentHero = () => {
       <div className="text-[#FDF5D9] relative z-10">
         <Container className="flex flex-col items-center justify-center gap-8 lg:gap-40 py-16 lg:py-24 text-center">
           <AnimatedHeading
-            primaryText="CUSTOM WEB APP"
+            primaryText="CUSTOM SOFTWARE"
             secondaryText="DEVELOPMENT"
           />
 
