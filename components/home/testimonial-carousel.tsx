@@ -6,7 +6,10 @@ import { useInView } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Image, { type StaticImageData } from "next/image";
 
-import Barter from "@/public/barter-logo.svg";
+import Scotia from "@/public/scotia.svg";
+import RBC from "@/public/rbc.svg";
+import Dollarama from "@/public/dollarama.svg";
+import CIBC from "@/public/cibc.svg";
 import Container from "@/components/container";
 
 interface Testimonial {
@@ -20,27 +23,27 @@ interface Testimonial {
 const testimonials: Testimonial[] = [
   {
     quote:
+      "Finding qualified developers was our biggest challenge until we partnered with Ancile. Their talent pool is exceptional, and their onboarding process meant our new team members were productive from week one.",
+    author: "Jessica Rivera",
+    position: "Product Lead at",
+    company: "Scotiabank",
+    logo: Scotia,
+  },
+  {
+    quote:
       "We needed to quickly scale our dev team for a tight product deadline, and Ancile delivered. The engineers they brought on were not only skilled but blended seamlessly with our in-house team. It felt more like a partnership than outsourcing.",
     author: "Sarah McAllister",
     position: "Product Lead at",
-    company: "BrightLayer Tech",
-    logo: Barter,
+    company: "RBC",
+    logo: RBC,
   },
   {
     quote:
-      "Ancile helped us transform our digital presence with expert developers who understood our vision from day one. Their team integrated perfectly with ours, delivering exceptional results ahead of schedule.",
+      "We needed to quickly scale our dev team for a tight product deadline, and Ancile delivered. The engineers they brought on were not only skilled but blended seamlessly with our in-house team. It felt more like a partnership than outsourcing.",
     author: "Michael Chen",
     position: "CTO at",
-    company: "Nexus Innovations",
-    logo: Barter,
-  },
-  {
-    quote:
-      "Finding qualified developers was our biggest challenge until we partnered with Ancile. Their talent pool is exceptional, and their onboarding process meant our new team members were productive from week one.",
-    author: "Jessica Rivera",
-    position: "Engineering Director at",
-    company: "Quantum Solutions",
-    logo: Barter,
+    company: "Dollarama",
+    logo: Dollarama,
   },
 ];
 

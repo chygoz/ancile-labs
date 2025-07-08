@@ -18,8 +18,8 @@ export default function Footer() {
     { name: "Company", href: "/company" },
     { name: "Services", href: "/services" },
     { name: "Clients", href: "/clients" },
+    { name: "Careers", href: "/careers" },
     { name: "Contact us", href: "#contact" },
-    { name: "Privacy policy", href: "/privacy-policy" },
   ];
 
   // Show scroll button when page is scrolled down
@@ -153,6 +153,15 @@ export default function Footer() {
                 <InstagramIcon className="h-6 w-6" />
               </motion.a>
             </div>
+
+            <Link
+              href={"/privacy-policy"}
+              className={`text-white hover:underline underline-offset-6 hover:text-gray-200 transition-colors font-medium ${
+                pathname === "/privacy-policy" ? "underline" : ""
+              }`}
+            >
+              Privacy policy
+            </Link>
           </motion.div>
         </Container>
       </div>

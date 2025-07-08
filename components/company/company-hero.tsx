@@ -9,7 +9,7 @@ import { AnimatedHeading } from "@/components/common/animated-heading";
 
 export default function CompanyHero() {
   return (
-    <section className="relative min-h-screen w-full bg-[#330505] overflow-hidden pt-24">
+    <section className="relative min-h-dvh w-full bg-[#330505] overflow-hidden pt-24">
       <div className="text-[#FDF5D9]">
         <Container className="flex flex-col lg:flex-row items-start justify-between gap-8 lg:gap-40 py-16 lg:py-24">
           {/* Left side - Heading */}
@@ -57,7 +57,7 @@ export default function CompanyHero() {
                   src="/girl-glasses.webp"
                   alt="Ancile team members"
                   fill
-                  className="object-cover rounded-t-3xl"
+                  className="not-sm:object-left object-cover rounded-t-3xl"
                   priority
                 />
               </div>

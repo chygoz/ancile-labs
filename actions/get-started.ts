@@ -17,7 +17,8 @@ export async function submitGetStartedForm({
   formData,
   turnstileToken,
 }: SubmitGetStartedFormParams) {
-  // Verify Turnstile token first
+  console.log("Started token", turnstileToken);
+
   const turnstileResponse = await fetch(
     "https://challenges.cloudflare.com/turnstile/v0/siteverify",
     {
@@ -58,6 +59,7 @@ export async function submitGetStartedForm({
   try {
     // Send email using Resend
     const { data, error } = await resend.emails.send({
+      // from: "get-started@ancilecanadainc.com",
       from: "contact@azacdev.com",
       to: ["azacdev@gmail.com"],
       subject: `New Get Started Request from ${name}`,

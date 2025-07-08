@@ -15,7 +15,6 @@ export async function submitContactForm({
   formData,
   turnstileToken,
 }: SubmitContactFormParams) {
-  // Verify Turnstile token first
   const turnstileResponse = await fetch(
     "https://challenges.cloudflare.com/turnstile/v0/siteverify",
     {
@@ -56,6 +55,7 @@ export async function submitContactForm({
   try {
     // Send email using Resend with the new ContactEmail component
     const { data, error } = await resend.emails.send({
+      // from: "contact@ancilecanadainc.com",
       from: "contact@azacdev.com",
       to: ["azacdev@gmail.com"],
       subject: `New Contact from ${name}`,

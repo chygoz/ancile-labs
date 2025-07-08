@@ -1,8 +1,7 @@
-import ClientsHero from "@/components/clients/clients-hero";
-import { AnimatedSplitContent } from "@/components/common/animated-split-content";
-import ContactSection from "@/components/common/contact-section";
-import LogosMarquee from "@/components/common/logos-marquee";
 import Container from "@/components/container";
+import ClientsHero from "@/components/clients/clients-hero";
+import LogosMarquee from "@/components/common/logos-marquee";
+import { AnimatedSplitContent } from "@/components/common/animated-split-content";
 import TestimonialCarousel from "@/components/home/testimonial-carousel";
 
 const ClientsPage = () => {
@@ -24,7 +23,6 @@ const ClientsPage = () => {
         </Container>
       </div>
       <TestimonialCarousel />
-      <ContactSection />
     </div>
   );
 };

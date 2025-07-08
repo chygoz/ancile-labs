@@ -9,10 +9,11 @@ import BusinessMan from "@/public/man-shake.webp";
 import DoubleAngle from "@/public/double-angle.svg";
 import Container from "@/components/container";
 import { AnimatedHeading } from "@/components/common/animated-heading";
+import { buttonVariants } from "../ui/button";
 
 const ClientsHero = () => {
   return (
-    <section className="relative min-h-screen w-full bg-[#330505] overflow-hidden pt-16 md:pt-20 lg:pt-24">
+    <section className="relative min-h-dvh w-full bg-[#330505] overflow-hidden pt-16 md:pt-20 lg:pt-24">
       {/* Image Section */}
       <Container className="relative flex flex-col md:flex-row justify-center md:justify-between items-center gap-8 md:gap-0">
         <motion.div
@@ -86,7 +87,9 @@ const ClientsHero = () => {
             <div className="text-center lg:text-left">
               <Link
                 href="#contact"
-                className="inline-block bg-[#EFD2DC] text-black px-4 sm:px-6 py-2 sm:py-3 rounded-full hover:bg-[#EFD2DC]/90 transition-colors font-semibold"
+                className={` !rounded-full px-6 ${buttonVariants({
+                  variant: "pink",
+                })}`}
               >
                 Let&apos;s Talk Strategy
               </Link>
