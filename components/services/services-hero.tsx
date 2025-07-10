@@ -35,8 +35,9 @@ const ServicesHero = () => {
           >
             <p className="text-lg mb-8 z-10">
               Whether you&apos;re launching a product, scaling your team, or
-              modernizing your tech, Ancile Inc. offers tailored solutions that
-              move you forward — faster, smarter, and with less stress.
+              modernizing your tech, Ancile Canada Inc. offers tailored
+              solutions that move you forward — faster, smarter, and with less
+              stress.
             </p>
             <Link
               href="#contact"

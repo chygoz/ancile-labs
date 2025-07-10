@@ -103,10 +103,23 @@ export default function Footer() {
             className="space-y-4"
           >
             <h3 className="text-lg text-white">Ancile Canada HQ</h3>
-            <div className="text-[#8A846F] text-lg space-y-1">
-              <p>3665 Kingsway Suite</p>
-              <p>300, Vancouver, BC</p>
-              <p>V5R 5W2.</p>
+            <div className="text-[#8A846F] text-lg space-y-2">
+              <p>
+                3665 Kingsway
+                <br />
+                Suite 300,
+                <br />
+                Vancouver, BC
+                <br />
+                V5R 5W2.
+              </p>
+
+              <p>
+                1850 Del Paso Rd, Ste# 3,
+                <br />
+                Sacramento, CA 95834
+                <br />
+              </p>
             </div>
           </motion.div>
 
@@ -170,7 +183,7 @@ export default function Footer() {
       <div className="py-6 px-4 bg-[#290303]">
         <div className="container mx-auto text-center">
           <p className="text-sm text-[#8A846F]">
-            Copyright © {new Date().getFullYear()} Ancile inc. Designed &
+            Copyright © {new Date().getFullYear()} Ancile Canada Inc. Designed &
             Developed by Cbayt Studio
           </p>
         </div>

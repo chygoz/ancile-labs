@@ -96,7 +96,7 @@ export default function TeamShowcase() {
           <AnimatedSplitContent
             primaryHeading="Get to know us"
             secondaryHeading="better"
-            description="Ancile Inc. is built on the idea that tech should empower people — not complicate their work. We're consultants, developers, recruiters, and problem-solvers with one mission: to move your business forward."
+            description="Ancile Canada Inc. is built on the idea that tech should empower people — not complicate their work. We're consultants, developers, recruiters, and problem-solvers with one mission: to move your business forward."
             linkHref="/company#team"
             linkText="Meet the team"
             className="text-[#330505]"

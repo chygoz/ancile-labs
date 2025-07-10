@@ -84,7 +84,7 @@ export const ContactEmail = ({
             This message was sent through your website contact form.
           </Text>
           <Text style={footerText}>
-            © {new Date().getFullYear()} Ancile Inc. All rights reserved.
+            © {new Date().getFullYear()} Ancile Canada Inc. All rights reserved.
           </Text>
         </Section>
       </Container>

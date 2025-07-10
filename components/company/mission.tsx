@@ -146,10 +146,10 @@ const Mission = () => {
         >
           <p className="text-center text-[#8A846F] text-lg md:text-xl max-w-[49.5rem] mx-auto leading-relaxed">
             Founded with a mission to bridge the gap between business goals and
-            technical execution, Ancile Inc. supports companies across North
-            America and beyond with a blend of consulting, development, and
-            staffing services. We&apos;re not just here to advise — we&apos;re
-            here to build with you, side by side.
+            technical execution, Ancile Canada Inc. supports companies across
+            North America and beyond with a blend of consulting, development,
+            and staffing services. We&apos;re not just here to advise —
+            we&apos;re here to build with you, side by side.
           </p>
         </motion.div>
 

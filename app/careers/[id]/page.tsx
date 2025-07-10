@@ -16,12 +16,12 @@ export async function generateMetadata({ params }: JobPageProps) {
 
   if (!job) {
     return {
-      title: "Job Not Found - Ancile Labs",
+      title: "Job Not Found - Ancile Canada Inc",
     };
   }
 
   return {
-    title: `${job.title} - Careers - Ancile Labs`,
-    description: `Apply for ${job.title} position at Ancile Labs. ${job.department} • ${job.location} • ${job.type}`,
+    title: `${job.title} - Careers - Ancile Canada Inc`,
+    description: `Apply for ${job.title} position at Ancile Canada Inc. ${job.department} • ${job.location} • ${job.type}`,
   };
 }

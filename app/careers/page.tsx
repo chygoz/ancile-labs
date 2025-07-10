@@ -6,7 +6,7 @@ import JobsList from "@/components/careers/jobs-list";
 import JobsListSkeleton from "@/components/careers/jobs-list-skeleton";
 
 export const metadata = {
-  title: "Careers - Ancile Labs",
+  title: "Careers - Ancile Canada Inc",
   description:
     "Join our team of problem-solvers helping businesses grow through smart IT consulting, scalable talent, and modern web solutions.",
 };
