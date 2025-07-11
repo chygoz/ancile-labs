@@ -9,6 +9,8 @@ import Tej from "@/public/tej-kumar.jpeg";
 import Slash from "@/public/slash-vector.svg";
 import Container from "@/components/container";
 import SirBlack from "@/public/sir-black.webp";
+import Chygoz from "@/public/chygoz.webp";
+import Venkata from "@/public/venkata.jpeg";
 import WhiteWoman from "@/public/white-woman.webp";
 import { AnimatedSplitContent } from "@/components/common/animated-split-content";
 
@@ -29,11 +31,11 @@ const teamMembers: TeamMember[] = [
     isSlash: true,
   },
   {
-    image: WhiteWoman,
+    image: Venkata,
     alt: "Professional team member in business attire",
   },
   {
-    image: SirBlack,
+    image: Chygoz,
     alt: "Professional team member in business attire",
   },
 ];

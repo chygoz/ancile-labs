@@ -2,17 +2,17 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronUp } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { ChevronUp, MapPin } from "lucide-react";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-
 import Container from "@/components/container";
 import { FacebookIcon, InstagramIcon, LinkedinIcon } from "@/components/icons";
 
 export default function Footer() {
   const pathname = usePathname();
   const [isScrollVisible, setIsScrollVisible] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState(0);
 
   const navItems = [
     { name: "Company", href: "/company" },
@@ -22,12 +22,26 @@ export default function Footer() {
     { name: "Contact us", href: "#contact" },
   ];
 
+  const locations = [
+    {
+      name: "Canada",
+      address: "3665 Kingsway,\n Suite 300\nVancouver, BC\n V5R 5W2",
+    },
+    {
+      name: "USA",
+      address: "1850 Del Paso Rd, Ste# 3\nSacramento, CA 95834",
+    },
+    {
+      name: "India",
+      address: "4-60, R Number C5\nChodavaram, Andhra Pradesh\n 521139 India",
+    },
+  ];
+
   // Show scroll button when page is scrolled down
   useEffect(() => {
     const toggleVisibility = () => {
       setIsScrollVisible(window.scrollY > 600);
     };
-
     window.addEventListener("scroll", toggleVisibility);
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
@@ -95,32 +109,47 @@ export default function Footer() {
       {/* Main content section */}
       <div className="py-12 px-4">
         <Container className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Left side - Address */}
+          {/* Left side - Locations with tabs */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
             className="space-y-4"
           >
-            <h3 className="text-lg text-white">Ancile Canada HQ</h3>
-            <div className="text-[#8A846F] text-lg space-y-2">
-              <p>
-                3665 Kingsway
-                <br />
-                Suite 300,
-                <br />
-                Vancouver, BC
-                <br />
-                V5R 5W2.
-              </p>
-
-              <p>
-                1850 Del Paso Rd, Ste# 3,
-                <br />
-                Sacramento, CA 95834
-                <br />
-              </p>
+            <div className="flex items-center gap-2 mb-4">
+              <MapPin className="h-5 w-5 text-white" />
+              <h3 className="text-lg text-white">Our Locations</h3>
             </div>
+
+            {/* Location tabs */}
+            <div className="flex flex-wrap gap-2 mb-4">
+              {locations.map((location, index) => (
+                <button
+                  key={location.name}
+                  onClick={() => setSelectedLocation(index)}
+                  className={`px-3 py-1 rounded-full text-sm transition-colors cursor-pointer ${
+                    selectedLocation === index
+                      ? "bg-white text-[#330505]"
+                      : "bg-white/20 text-white hover:bg-white/30"
+                  }`}
+                >
+                  {location.name}
+                </button>
+              ))}
+            </div>
+
+            {/* Selected location address */}
+            <motion.div
+              key={selectedLocation}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="text-[#8A846F] text-lg"
+            >
+              <p className="whitespace-pre-line">
+                {locations[selectedLocation].address}
+              </p>
+            </motion.div>
           </motion.div>
 
           {/* Right side - Connect message and social */}
