@@ -104,7 +104,7 @@ export const GetStartedEmail = ({
             Started&apos; form.
           </Text>
           <Text style={footerText}>
-            © {new Date().getFullYear()} Ancile Inc. All rights reserved.
+            © {new Date().getFullYear()} Ancile Canada Inc. All rights reserved.
           </Text>
         </Section>
       </Container>

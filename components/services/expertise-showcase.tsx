@@ -1,23 +1,20 @@
 "use client";
 
+import Link from "next/link";
+import { useRef } from "react";
 import { motion } from "framer-motion";
-import { useRef, useState } from "react";
 import { useInView } from "framer-motion";
 import Image, { type StaticImageData } from "next/image";
 
 import WomanExpert from "@/public/woman-expert.webp";
 import ManExpert from "@/public/man-expert.webp";
 import MoustacheExpert from "@/public/moustache-expert.webp";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import Container from "@/components/container";
-import GetStartedModal from "@/components/get-started-modal";
 
 const ExpertiseShowcase = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState<string>("");
 
   const expertiseAreas = [
     {
@@ -25,31 +22,29 @@ const ExpertiseShowcase = () => {
       imageAlt: "Professional in business attire",
       title: "IT Consulting & Corporate Trainings",
       buttonText: "Book Consultation",
-      backgroundColor: "#A20F0F", // deep red
+      backgroundColor: "#A20F0F",
       serviceType: "tech-consulting",
+      link: "/services/it-consulting",
     },
     {
       imageSrc: MoustacheExpert,
       imageAlt: "Professional in white shirt",
       title: "Scalable Talent Solutions",
       buttonText: "Need New Talent?",
-      backgroundColor: "#330505", // dark burgundy
+      backgroundColor: "#330505",
       serviceType: "talents-solution",
+      link: "/services/talent-solutions",
     },
     {
       imageSrc: ManExpert,
       imageAlt: "Professional in light blazer",
       title: "Custom Web App Development",
       buttonText: "Start Your Project",
-      backgroundColor: "#E7ADB2", // pink
+      backgroundColor: "#E7ADB2",
       serviceType: "software-development",
+      link: "/services/software-development",
     },
   ];
-
-  const handleExpertiseClick = (serviceType: string) => {
-    setSelectedService(serviceType);
-    setIsModalOpen(true);
-  };
 
   return (
     <>
@@ -69,22 +64,12 @@ const ExpertiseShowcase = () => {
                 expertise={expertise}
                 index={index}
                 isInView={isInView}
-                onButtonClick={() =>
-                  handleExpertiseClick(expertise.serviceType)
-                }
+                link={expertise.link}
               />
             ))}
           </motion.div>
         </Container>
       </section>
-
-      <div className="hidden">
-        <GetStartedModal
-          isOpen={isModalOpen}
-          onOpenChange={setIsModalOpen}
-          defaultService={selectedService}
-        />
-      </div>
     </>
   );
 };
@@ -100,14 +85,14 @@ interface ExpertiseCardProps {
   };
   index: number;
   isInView: boolean;
-  onButtonClick: () => void;
+  link: string;
 }
 
 const ExpertiseCard = ({
   expertise,
   index,
   isInView,
-  onButtonClick,
+  link,
 }: ExpertiseCardProps) => {
   const ref = useRef(null);
   const cardInView = useInView(ref, { once: true, amount: 0.3 });
@@ -154,13 +139,14 @@ const ExpertiseCard = ({
           }
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <Button
-            variant={"pink"}
-            className="hover:translate-y-[-3px] active:scale-[0.98] transition-transform rounded-full px-6"
-            onClick={onButtonClick}
+          <Link
+            href={link}
+            className={`hover:translate-y-[-3px] active:scale-[0.98] transition-transform !rounded-full px-6 ${buttonVariants(
+              { variant: "pink" }
+            )}`}
           >
             {expertise.buttonText}
-          </Button>
+          </Link>
         </motion.div>
       </div>
     </motion.div>

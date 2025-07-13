@@ -146,7 +146,7 @@ export default function ContactSection() {
             >
               Whether you need one role filled or an entire product delivered —
               we&apos;re here to help. Reach out and let&apos;s discuss how
-              Ancile Inc. can support your next step.
+              Ancile Canada Inc. can support your next step.
             </motion.p>
 
             <Form {...form}>

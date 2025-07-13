@@ -83,9 +83,9 @@ export function AnimatedSplit() {
         transition={{ delay: 1.1, duration: 0.5 }}
       >
         <motion.p className="text-base sm:text-lg mb-4 md:mb-6 font-medium">
-          Ancile Inc. empowers your business with smart solutions, fast hires,
-          and modern tools — whether you&apos;re scaling, streamlining tech, or
-          building from scratch.
+          Ancile Canada Inc. empowers your business with smart solutions, fast
+          hires, and modern tools — whether you&apos;re scaling, streamlining
+          tech, or building from scratch.
         </motion.p>
 
         <Link

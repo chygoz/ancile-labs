@@ -312,6 +312,9 @@ export default function GetStartedModal({
                                       <SelectItem value="software-development">
                                         Software Development
                                       </SelectItem>
+                                      <SelectItem value="corporate-training">
+                                        Corporate Training
+                                      </SelectItem>
                                     </SelectContent>
                                   </Select>
                                 </FormControl>

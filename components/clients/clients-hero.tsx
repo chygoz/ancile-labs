@@ -81,8 +81,8 @@ const ClientsHero = () => {
           >
             <p className="text-lg mb-8 text-center lg:text-left">
               From fast-growing startups to established enterprises, our clients
-              count on Ancile Inc. to deliver sharp strategy, dependable talent,
-              and reliable technology — every step of the way.
+              count on Ancile Canada Inc. to deliver sharp strategy, dependable
+              talent, and reliable technology — every step of the way.
             </p>
             <div className="text-center lg:text-left">
               <Link

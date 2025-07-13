@@ -9,9 +9,9 @@ import { AnimatedHeading } from "@/components/common/animated-heading";
 
 export default function CompanyHero() {
   return (
-    <section className="relative min-h-dvh w-full bg-[#330505] overflow-hidden pt-24">
-      <div className="text-[#FDF5D9]">
-        <Container className="flex flex-col lg:flex-row items-start justify-between gap-8 lg:gap-40 py-16 lg:py-24">
+    <section className="relative min-h-dvh w-full bg-[#330505] overflow-hidden pt-24 flex flex-col">
+      <div className="text-[#FDF5D9] flex-1">
+        <Container className="flex flex-col lg:flex-row items-start justify-between gap-8 lg:gap-40 py-16 lg:py-24 h-full">
           {/* Left side - Heading */}
 
           <AnimatedHeading primaryText="WHO WE ARE" />
@@ -39,7 +39,7 @@ export default function CompanyHero() {
 
         {/* Image Section - Similar to hero content container */}
 
-        <div className="relative z-10 h-full flex items-end justify-center">
+        <div className="relative z-10 h-full">
           <motion.div
             className="w-full rounded-t-3xl h-[437px] "
             initial={{ opacity: 0, y: 100 }}
