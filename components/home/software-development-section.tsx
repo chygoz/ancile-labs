@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useRef, useState } from "react";
 import { useInView } from "framer-motion";
 
 import Container from "@/components/container";
