@@ -1,17 +1,13 @@
 "use client";
 
 import { Loader2 } from "lucide-react";
-import { motion } from "framer-motion";
-import { useForm } from "react-hook-form";
-import { useInView } from "framer-motion";
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback } from "react"; // useRef is kept for sectionRef id
 import { usePathname } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TurnstileWidget } from "../turnstile-widget";
 import { toast } from "sonner";
 import { submitContactForm } from "@/actions/contact";
 import { contactFormSchema, type ContactFormValues } from "@/lib/schamas";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -24,12 +20,12 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Container from "@/components/container";
 import { AnimatedHeading } from "@/components/common/animated-heading";
+import { useForm } from "react-hook-form"; // Import useForm
 
 export default function ContactSection() {
   const pathname = usePathname();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string>("");
-
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
@@ -40,8 +36,7 @@ export default function ContactSection() {
     },
   });
 
-  const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+  const sectionRef = useRef(null); // Kept for the id="contact"
 
   const handleTurnstileSuccess = useCallback((token: string) => {
     console.log(
@@ -57,30 +52,9 @@ export default function ContactSection() {
   }, []);
 
   const isCareerWithId = /^\/careers\/[^/]+$/.test(pathname);
-
   if (isCareerWithId) {
     return null;
   }
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
 
   async function onSubmit(values: ContactFormValues) {
     console.log("🚀 Form submission started");
@@ -90,28 +64,21 @@ export default function ContactSection() {
         ? "Present (" + turnstileToken.length + " chars)"
         : "Missing"
     );
-
     if (!turnstileToken) {
       toast.error("Please complete the security verification.");
       return;
     }
-
     setIsSubmitting(true);
-
     try {
       console.log("📤 Sending form data to server...");
       const result = await submitContactForm({
         formData: values,
         turnstileToken,
       });
-
       console.log("📥 Server response:", result);
-
       if (result.success) {
         toast.success(result.message);
         form.reset();
-        // Only clear token after successful submission
-        setTurnstileToken("");
       } else {
         toast.error(result.message);
       }
@@ -133,32 +100,23 @@ export default function ContactSection() {
               textColor="#330505"
             />
           </div>
-
-          <motion.div
-            className="space-y-6"
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            variants={containerVariants}
-          >
-            <motion.p
-              className="text-lg text-[#8A846F]"
-              variants={itemVariants}
-            >
+          <div className="space-y-6">
+            {" "}
+            <p className="text-lg text-[#8A846F]">
+              {" "}
               Whether you need one role filled or an entire product delivered —
               we&apos;re here to help. Reach out and let&apos;s discuss how
               Ancile Canada Inc. can support your next step.
-            </motion.p>
-
+            </p>
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-8"
               >
-                <motion.div
-                  className="grid gap-8 md:grid-cols-2"
-                  variants={containerVariants}
-                >
-                  <motion.div variants={itemVariants}>
+                <div className="grid gap-8 md:grid-cols-2">
+                  {" "}
+                  <div>
+                    {" "}
                     <FormField
                       control={form.control}
                       name="name"
@@ -179,9 +137,9 @@ export default function ContactSection() {
                         </FormItem>
                       )}
                     />
-                  </motion.div>
-
-                  <motion.div variants={itemVariants}>
+                  </div>
+                  <div>
+                    {" "}
                     <FormField
                       control={form.control}
                       name="email"
@@ -203,10 +161,10 @@ export default function ContactSection() {
                         </FormItem>
                       )}
                     />
-                  </motion.div>
-                </motion.div>
-
-                <motion.div variants={itemVariants}>
+                  </div>
+                </div>
+                <div>
+                  {" "}
                   <FormField
                     control={form.control}
                     name="subject"
@@ -227,9 +185,9 @@ export default function ContactSection() {
                       </FormItem>
                     )}
                   />
-                </motion.div>
-
-                <motion.div variants={itemVariants}>
+                </div>
+                <div>
+                  {" "}
                   <FormField
                     control={form.control}
                     name="message"
@@ -250,19 +208,14 @@ export default function ContactSection() {
                       </FormItem>
                     )}
                   />
-                </motion.div>
-
+                </div>
                 <TurnstileWidget
                   onSuccess={handleTurnstileSuccess}
                   onError={handleTurnstileError}
                   onExpired={handleTurnstileError}
                 />
-
-                <motion.div
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
+                <div>
+                  {" "}
                   <Button
                     type="submit"
                     variant={"pink"}
@@ -278,10 +231,10 @@ export default function ContactSection() {
                       "Send Message"
                     )}
                   </Button>
-                </motion.div>
+                </div>
               </form>
             </Form>
-          </motion.div>
+          </div>
         </div>
       </Container>
     </section>

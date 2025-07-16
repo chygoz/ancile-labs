@@ -118,29 +118,6 @@ export default function GetStartedModal({
 
     setIsSubmitting(true);
 
-    // try {
-    //   const result = await submitGetStartedForm({
-    //     formData: values,
-    //     turnstileToken,
-    //   });
-
-    //   if (result.success) {
-    //     toast.success(result.message);
-    //     form.reset();
-    //     setTurnstileToken("");
-    //     setTimeout(() => setModalOpen(false), 1500);
-    //   } else {
-    //     toast.error(result.message);
-    //     setTurnstileToken("");
-    //   }
-    // } catch (error) {
-    //   console.error("Submission error:", error);
-    //   toast.error("An unexpected error occurred. Please try again.");
-    //   setTurnstileToken("");
-    // } finally {
-    //   setIsSubmitting(false);
-    // }
-
     try {
       console.log("📤 Sending form data to server...");
       const result = await submitGetStartedForm({
@@ -153,8 +130,6 @@ export default function GetStartedModal({
       if (result.success) {
         toast.success(result.message);
         form.reset();
-        // Only clear token after successful submission
-        setTurnstileToken("");
       } else {
         toast.error(result.message);
       }

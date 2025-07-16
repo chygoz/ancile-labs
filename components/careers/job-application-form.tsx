@@ -126,11 +126,9 @@ export default function JobApplicationForm({
         toast.success("Application submitted successfully!");
       } else {
         toast.error(result.error || "Failed to submit application");
-        setTurnstileToken("");
       }
     } catch (error) {
       toast.error("An unexpected error occurred");
-      setTurnstileToken("");
     } finally {
       setIsSubmitting(false);
     }
