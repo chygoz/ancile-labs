@@ -6,6 +6,7 @@ import { ChevronUp, MapPin } from "lucide-react";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+
 import Container from "@/components/container";
 import { FacebookIcon, InstagramIcon, LinkedinIcon } from "@/components/icons";
 
@@ -26,18 +27,20 @@ export default function Footer() {
     {
       name: "Canada",
       address: "3665 Kingsway,\n Suite 300\nVancouver, BC\n V5R 5W2",
+      email: "Info@ancilecanadainc.com",
     },
     {
       name: "USA",
       address: "1850 Del Paso Rd, Ste# 3\nSacramento, CA 95834",
+      email: "Info@ancilecanadainc.com",
     },
     {
       name: "India",
-      address: "4-60, R Number C5\nChodavaram, Andhra Pradesh\n 521139 India",
+      address: "4-60, R Number C5\nChodavaram, Andhra Pradesh\n India-521139",
+      email: "Info@ancilecanadainc.com",
     },
   ];
 
-  // Show scroll button when page is scrolled down
   useEffect(() => {
     const toggleVisibility = () => {
       setIsScrollVisible(window.scrollY > 600);
@@ -82,7 +85,6 @@ export default function Footer() {
               <span className="text-sm -mt-1 self-end">Canada</span>
             </motion.div>
           </Link>
-
           {/* Navigation */}
           <nav className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 place-content-center gap-y-4">
             {navItems.map((item, index) => (
@@ -105,7 +107,6 @@ export default function Footer() {
           </nav>
         </Container>
       </div>
-
       {/* Main content section */}
       <div className="py-12 px-4">
         <Container className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -120,7 +121,6 @@ export default function Footer() {
               <MapPin className="h-5 w-5 text-white" />
               <h3 className="text-lg text-white">Our Locations</h3>
             </div>
-
             {/* Location tabs */}
             <div className="flex flex-wrap gap-2 mb-4">
               {locations.map((location, index) => (
@@ -137,8 +137,7 @@ export default function Footer() {
                 </button>
               ))}
             </div>
-
-            {/* Selected location address */}
+            {/* Selected location address and email */}
             <motion.div
               key={selectedLocation}
               initial={{ opacity: 0, y: 10 }}
@@ -149,9 +148,19 @@ export default function Footer() {
               <p className="whitespace-pre-line">
                 {locations[selectedLocation].address}
               </p>
+              {locations[selectedLocation].email && (
+                <p className="mt-2">
+                  Email:{" "}
+                  <a
+                    href={`mailto:${locations[selectedLocation].email}`}
+                    className="text-white hover:underline"
+                  >
+                    {locations[selectedLocation].email}
+                  </a>
+                </p>
+              )}
             </motion.div>
           </motion.div>
-
           {/* Right side - Connect message and social */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -164,7 +173,6 @@ export default function Footer() {
                 "Let's stay connected. Whether you're exploring how we can work together or simply want to follow our journey, we're just a message or a click away — and always glad to hear from you."
               }
             </p>
-
             {/* Social Media Icons */}
             <div className="flex gap-4">
               <motion.a
@@ -195,7 +203,6 @@ export default function Footer() {
                 <InstagramIcon className="h-6 w-6" />
               </motion.a>
             </div>
-
             <Link
               href={"/privacy-policy"}
               className={`text-white hover:underline underline-offset-6 hover:text-gray-200 transition-colors font-medium ${
@@ -207,7 +214,6 @@ export default function Footer() {
           </motion.div>
         </Container>
       </div>
-
       {/* Copyright section */}
       <div className="py-6 px-4 bg-[#290303]">
         <div className="container mx-auto text-center">
@@ -217,7 +223,6 @@ export default function Footer() {
           </p>
         </div>
       </div>
-
       {/* Scroll to top button */}
       <AnimatePresence>
         {isScrollVisible && (
