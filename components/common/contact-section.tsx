@@ -79,8 +79,6 @@ export default function ContactSection() {
       if (result.success) {
         toast.success(result.message);
         form.reset();
-        // Only clear token after successful submission
-        setTurnstileToken("");
       } else {
         toast.error(result.message);
       }
