@@ -49,8 +49,8 @@ const teamMembers: TeamMember[] = [
   },
   {
     id: 3,
-    name: "Chigozirim Obike",
-    position: "IT Director/Consultant",
+    name: "Chygoz Obike",
+    position: "Consultant",
     company: "Ancile Canada Inc",
     image: Chygoz,
     des: "A dynamic entrepreneur and technocrat passionate about transforming industries and empowering communities. With a strong background in computer science, I have built a diverse portfolio of ventures that reflect  dedication to excellence, creativity, and impact.",
